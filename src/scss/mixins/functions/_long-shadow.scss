@@ -1,0 +1,47 @@
+//*-----------------------------------------
+//* long text-shadow function
+//*-----------------------------------------
+@function longshadow($direction,$length,$color){
+    $shadow:  0px 0px $color;
+    @for $i from 1 through $length{
+	  @if $direction == topleft {
+		 $shadow :  " #{$shadow} , -#{$i}px -#{$i}px #{$color}";
+	} @else if  $direction == topright{
+		$shadow : " #{$shadow} , #{$i}px -#{$i}px #{$color}";
+	}@else if  $direction == bottomleft{
+		$shadow : " #{$shadow} , -#{$i}px #{$i}px #{$color}";
+	}@else if  $direction == bottomright{
+		$shadow : " #{$shadow} , #{$i}px #{$i}px #{$color}";
+	}@else{
+		@warn  "  unknow [#{$direction}] in [topleft | topright | bottomleft | bottomright ]";
+	}
+    }
+     @return #{$shadow};
+}
+
+//*-----------------------------------------
+//* make box shadows
+//*-----------------------------------------
+ // todo  fix boxshadow to right or left direction
+ @function mbs($direction, $length, $blur, $thick, $color, $inset:false) {
+    $inset: if($inset, $inset, null);
+    $shadow: 0px 0px $blur $thick $color $inset;
+    @for $i from 1 through $length {
+        @if $direction==topleft {
+            $shadow: $shadow ", -#{$i}px -#{$i}px " $blur $thick $color $inset;
+        }
+        @else if $direction==topright {
+            $shadow: $shadow ",#{$i}px -#{$i}px " $blur $thick $color $inset;
+        }
+        @else if $direction==bottomleft {
+            $shadow: $shadow ",-#{$i}px #{$i}px " $blur $thick $color $inset;
+        }
+        @else if $direction==bottomright {
+            $shadow:$shadow",#{$i}px #{$i}px" $blur $thick $color $inset;
+        }
+        @else {
+            @warn "  unknow [#{$direction}] in [topleft | topright | bottomleft | bottomright ]";
+        }
+    }
+    @return #{$shadow};
+}

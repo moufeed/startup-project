@@ -1,0 +1,54 @@
+@charset 'utf-8';
+////
+/// @group background
+/// @since 1.0.0
+////
+
+//*-----------------------------------------
+//* size mixin
+//*-----------------------------------------
+///  Set the height and width of element
+/// ---
+/// #### Syntax :
+/// ```markup
+///     size([<length>|<percentage>],[<length>|<percentage>]);
+/// ```
+/// @param {number} $width    - Set the Width
+/// @param {number} $height   - Set the height
+/// @example  scss - SCSS
+///  .foo{
+///      @include size(80%,150px);
+///      }
+///   @example  css - CSS
+///  .foo{
+///      width: 80%;
+///      height: 150px;
+///      }
+@mixin size($width,$height) {
+  width:  $width;
+  height: $height;
+}
+
+//*-----------------------------------------
+//* square mixin
+//*-----------------------------------------
+///  Set the height and width of element
+/// ---
+/// #### Syntax :
+/// ```markup
+///     square([<length>|<percentage>]);
+/// ```
+/// @param {number} $size    - Set the height and width of element
+/// @example  scss - SCSS
+///  .foo{
+///      @include square(150px);
+///      }
+///   @example  css - CSS
+///  .foo{
+///      width: 150px;
+///      height: 150px;
+///      }
+@mixin square($size) {
+  @include size($size, $size);
+}
+

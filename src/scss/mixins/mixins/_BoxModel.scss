@@ -1,0 +1,69 @@
+/// The `box` is a shorthand mixin for width , height , padding and margin individual properties
+/// #### Syntax :
+/// ```markup
+///   box(<'size'>[width | height]? [,<'padding'>,<'margin'>]?);
+/// ```
+/// @param {string} $size    [null]  - [required] <small>Defines a width and height of the  element</small>
+/// @param {string} $padding [false] - [optional] <small>Defines a padding of the  element</small>
+/// @param {string} $margin  [false] - [optional] <small>Defines a margin of the  element</small>
+/// @example  scss - SCSS
+///  .foo{
+///      @include  box(150px 120px);
+///  }
+///  .bar{
+///      @include  box(150px,0 15px, auto 5px);
+///  }
+/// @example css - CSS
+///  .foo {
+///    width: 150px;
+///    height: 120px;
+///  }
+///
+///  .bar {
+///    width: 150px;
+///    height: 150px;
+///    padding: 0 15px;
+///    margin: auto 5px;
+///  }
+@mixin box($size, $padding:false, $margin:false) {
+    @if length($size) > 1 {
+        @include size(nth($size,1), nth($size,2));
+    }
+    @else {
+        @include size($size, $size);
+    }
+    @if $padding {
+        padding: $padding;
+    }
+    @if $margin {
+        margin: $margin;
+    }
+}
+
+/// The `boxlayout` is essentially a box that wraps around HTML element, and it consists of: margins, borders and padding  properties.
+/// #### Syntax :
+/// ```markup
+///   boxlayout(<$properties-list'>[<'padding'> | <'margin'> | <'border'> ]+,<'values'>#);
+/// ```
+/// @param {string} $properties-list   <small>Defines a properties of the  element in shorthand </small>
+/// @param {string} $values   <small>Defines a properties values of the  element</small>
+/// @example  scss - SCSS
+///  .foo{
+///      @include boxlayout(m pt b ,0,5px,1px dashed #00f);
+///  }
+/// @example css - CSS
+///  .foo {
+///      margin: 0;
+///      padding-top: 5px;
+///      border: 1px dashed #00f;
+///  }
+@mixin boxlayout($properties-list,$values...){
+  @for $i from 1 through length($properties-list){
+    $property: nth($properties-list,$i);
+    $property: get-key($properties,$property);
+    #{$property} : nth($values,$i);
+  }
+}
+
+
+

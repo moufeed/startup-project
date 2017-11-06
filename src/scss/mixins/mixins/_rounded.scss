@@ -1,0 +1,23 @@
+
+//*-----------------------------------------
+//* Rounded  Corners
+//*-----------------------------------------
+@mixin br($radius...) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+
+
+//*-----------------------------------------
+//* specific corner  mixin
+//*-----------------------------------------
+
+@mixin sc($y,$x,$length){
+-webkit-border-#{$y}-#{$x}-radius: $length;
+-moz-border-#{$y}-#{$x}-radius: $length;
+-ms-border-#{$y}-#{$x}-radius: $length;
+border-#{$y}-#{$x}-radius: $length;
+}

@@ -1,0 +1,45 @@
+// -- settings -- //
+
+@import 'settings/settings';
+@import 'settings/maps';
+@import 'settings/mediaqueries';
+
+
+
+//-- functions --//
+@import 'functions/settings-function';
+@import 'functions/mediaqueries';
+@import 'functions/direction';
+@import 'functions/gradients';
+@import 'functions/long-shadow';
+@import 'functions/calc';
+
+
+
+//-- mixins -- //
+@import 'mixins/borders';
+@import 'mixins/BoxModel';
+@import 'mixins/column';
+@import 'mixins/counter';
+@import 'mixins/filters';
+@import 'mixins/flex';
+@import 'mixins/fonts';
+@import 'mixins/background';
+@import 'mixins/grid';
+@import 'mixins/utilities';
+@import 'mixins/MediaQueries';
+@import 'mixins/animation';
+@import 'mixins/placeholder';
+@import 'mixins/position';
+@import 'mixins/prefix';
+@import 'mixins/rounded';
+@import 'mixins/shadows';
+@import 'mixins/shapes';
+@import 'mixins/size';
+@import 'mixins/transform';
+
+
+// check if settings are imported
+@if variable-exists(settings) == false {
+    @error 'You need to import settings first!';
+}

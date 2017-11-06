@@ -1,0 +1,345 @@
+
+////
+/// @group background
+/// @since 1.0.0
+////
+
+ $prefixes:webkit,moz,o,ms;
+
+//*-----------------------------------------
+//* linear-gradient mixin
+//*-----------------------------------------
+///  creates an  background image  which represents a linear gradient of colors
+/// ---
+/// #### Syntax :
+/// ```markup
+///     linears([<angle>|<side-or-corner>]?, <color-start>,<color-end>, <color-stop>[false | <color-stop>]*);
+/// ```
+/// @param {angle|string} $direction    - set a starting point and a direction (or an angle)
+/// @param {color} $startcolor   - set a starting point color
+/// @param {color} $endcolor     - set an ending point color
+/// @param {string}  $colors  [false] -  set multiple color stops
+/// @example  scss - SCSS
+/// .foo{
+///     @include linears(bottom right ,#f00,#000);
+///     }
+///  .bar{
+///     @include linears(30deg ,#000 ,#fff, #f00 15 #0f0 30 #00f 70)
+///     }
+/// @example css - CSS
+///  .foo {
+///    background-color: #f00;
+///    background-image: -webkit-gradient(linear, bottom right, from(#f00, 0%), to(#000, 100%));
+///    background-image: -webkit-linear-gradient(bottom right, #f00 0%, #000 100%);
+///    background-image: -moz-linear-gradient(bottom right, #f00 0%, #000 100%);
+///    background-image: -o-linear-gradient(bottom right, #f00 0%, #000 100%);
+///    background-image: -ms-linear-gradient(bottom right, #f00 0%, #000 100%);
+///    background-image: linear-gradient(to top left, #f00 0%, #000 100%);
+///    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f00', endColorstr='#000',GradientType=1 );
+///  }
+///
+///  .bar {
+///    background-color: #000;
+///    background-image: -webkit-linear-gradient(30deg, #000 0%, #f00 15%, #0f0 30%, #00f 70%, #fff 100%);
+///    background-image: -moz-linear-gradient(30deg, #000 0%, #f00 15%, #0f0 30%, #00f 70%, #fff 100%);
+///    background-image: -o-linear-gradient(30deg, #000 0%, #f00 15%, #0f0 30%, #00f 70%, #fff 100%);
+///    background-image: -ms-linear-gradient(30deg, #000 0%, #f00 15%, #0f0 30%, #00f 70%, #fff 100%);
+///    background-image: linear-gradient(30deg, #000 0%, #f00 15%, #0f0 30%, #00f 70%, #fff 100%);
+///    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000', endColorstr='#fff',GradientType=1 );
+///  }
+@mixin linears($direction, $startcolor, $endcolor, $colors:false) {
+    background-color: nth($startcolor, 1);
+    @if $colors {
+        @each $prefix in $prefixes {
+            background-image: unquote("-#{$prefix}-linear-gradient(#{$direction, $startcolor 0%,colors($colors), $endcolor 100% })");
+        }
+        background-image: linear-gradient( todir($direction), $startcolor 0%, colors($colors), $endcolor 100%);
+    }
+    @else {
+        background-image: -webkit-gradient(linear, $direction, from($startcolor, 0%), to( $endcolor, 100%));
+        @each $prefix in $prefixes {
+            background-image: unquote('-#{$prefix}-linear-gradient(#{$direction, $startcolor 0%, $endcolor 100%})');
+        }
+        background-image:linear-gradient(todir($direction), $startcolor 0%, $endcolor 100%);
+    }
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{nth($startcolor,1)}', endColorstr='#{nth($endcolor,1)}', GradientType=1);
+}
+//*-----------------------------------------
+//*  Repeating  Linear Gardient  mixin
+//*-----------------------------------------
+///  creates an background image  with repeating linear gradient of colors
+/// ---
+/// #### Syntax :
+/// ```markup
+///     repeatlinear([<angle>|<side-or-corner>]?, <color-start>,<color-end>, <color-stop>[false | <color-stop>]*);
+/// ```
+/// @param {angle|string} $direction    - set a starting point and a direction (or an angle)
+/// @param {color} $startcolor   - set a starting point color
+/// @param {color} $endcolor     - set an ending point color
+/// @param {string}  $colors  [false] -  set multiple color stops
+/// @example  scss - SCSS
+/// .foo{
+///      @include  reptlinear(top left,#fff 2em ,#000 5em);
+///     }
+///  .bar{
+///      @include  repeatlinear(45deg,#f00 15px ,#0f0 40px,#000 25px);
+///     }
+/// @example css - CSS
+///  .foo {
+///    background-color: #fff;
+///     background-image: -webkit-repeating-linear-gradient(top left, #fff 2em, #000 5em);
+///     background-image: -moz-repeating-linear-gradient(top left, #fff 2em, #000 5em);
+///     background-image: -o-repeating-linear-gradient(top left, #fff 2em, #000 5em);
+///     background-image: -ms-repeating-linear-gradient(top left, #fff 2em, #000 5em);
+///     background-image: repeating-linear-gradient(to bottom right, #fff 2em, #000 5em);
+///     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#000',GradientType=1 );
+///  }
+///
+///  .bar {
+///   background-color: #f00;
+///   background-image: -webkit-repeating-linear-gradient(45deg, #f00 15px, #000 25px, #0f0 40px);
+///   background-image: -moz-repeating-linear-gradient(45deg, #f00 15px, #000 25px, #0f0 40px);
+///   background-image: -o-repeating-linear-gradient(45deg, #f00 15px, #000 25px, #0f0 40px);
+///   background-image: -ms-repeating-linear-gradient(45deg, #f00 15px, #000 25px, #0f0 40px);
+///   background-image: repeating-linear-gradient(45deg, #f00 15px, #000 25px, #0f0 40px);
+///   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f00', endColorstr='#0f0',GradientType=1 );
+///  }
+@mixin  repeatlinear($direction,$startcolor,$endcolor,$colors:false){
+   background-color: nth($startcolor,1);
+  @if $colors {
+     @each $prefix in $prefixes{
+     background-image: unquote('-#{$prefix}-repeating-linear-gradient(#{$direction,$startcolor,colors($colors),$endcolor})');
+    }
+    background-image: repeating-linear-gradient(todir($direction),$startcolor,colors($colors),$endcolor);
+  }
+  @else{
+    @each $prefix in $prefixes{
+     background-image: unquote('-#{$prefix}-repeating-linear-gradient(#{$direction,$startcolor,$endcolor})');
+    }
+    background-image: repeating-linear-gradient(todir($direction),$startcolor,$endcolor);
+  }
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{nth($startcolor,1)}', endColorstr='#{nth($endcolor,1)}',GradientType=1 );
+}
+
+//*-----------------------------------------
+//* radial gradient mixin
+//*-----------------------------------------
+///  creates an  background image  which represents a radial gradient of colors
+/// ---
+/// #### Syntax :
+/// ```markup
+///     radial([ circle || <length> ] | [ ellipse || [<length> | <percentage> ]{2}] | <color-stop> , <color-stop> [ , <color-stop> ]+);
+/// ```
+/// @param {string} $parameter1   -  set The gradient shape or starting color
+/// @param {string} $parameter2   -   set The gradient color
+/// @param {string} $arguments [false]   -  set multiple color stops
+/// @example  scss - SCSS
+/// .foo{
+///       @include radial( green  , blue , black  );
+///     }
+///  .bar{
+///       @include radial(  ellipse  15% 50% , black 10px,green 14px green 25px #fff 30px #fff 50px  black 53px );
+///     }
+/// @example css - CSS
+///  .foo {
+///     background-image: -webkit-radial-gradient(green, blue, black);
+///     background-image: -moz-radial-gradient(green, blue, black);
+///     background-image: -o-radial-gradient(green, blue, black);
+///     background-image: -ms-radial-gradient(green, blue, black);
+///     background-image: radial-gradient(green, blue, black);
+///  }
+///
+///  .bar {
+///   background-image: -webkit-radial-gradient(ellipse 15% 50%, black 10px, green 14px, green 25px, #fff 30px, #fff 50px, black 53px);
+///   background-image: -moz-radial-gradient(ellipse 15% 50%, black 10px, green 14px, green 25px, #fff 30px, #fff 50px, black 53px);
+///   background-image: -o-radial-gradient(ellipse 15% 50%, black 10px, green 14px, green 25px, #fff 30px, #fff 50px, black 53px);
+///   background-image: -ms-radial-gradient(ellipse 15% 50%, black 10px, green 14px, green 25px, #fff 30px, #fff 50px, black 53px);
+///   background-image: radial-gradient(ellipse 15% 50%, black 10px, green 14px, green 25px, #fff 30px, #fff 50px, black 53px);
+///  }
+@mixin radial($parameter1,$parameter2,$arguments:false){
+    @each $prefix in $prefixes{
+      background-image: unquote('-#{$prefix}-radial-gradient(#{$parameter1,$parameter2 if( $arguments, "," colors($arguments),'' )})');
+      }
+     background-image: unquote('radial-gradient(#{$parameter1,$parameter2 if( $arguments, "," colors($arguments),'' )})');
+}
+//*-----------------------------------------
+//* radial gradient mixin
+//*-----------------------------------------
+///  creates an  background  radial gradient  at Specific position
+/// ---
+/// #### Syntax :
+/// ```markup
+///     radial_at([<position> ]+ , [ circle || <length> ] | [ ellipse || [<length> | <percentage> ]{2}] <color-stop>,  [ <color-stop> ]? );
+/// ```
+/// @param {keyword | percentage | length} $position   -    set The gradient position
+/// @param {circle | ellipse} $shape   - set The gradient shape
+/// @param {color} $fromcolor   -  set The gradient start-color
+/// @param {color} $tocolor     -  set The gradient last-color)
+/// @param {color-stop} $colors [false]   -  set multiple color stops
+/// @example  scss - SCSS
+/// .foo{
+///      @include radial_at(top left,circle 25em,#f00,#000);
+///     }
+///  .bar{
+///      @include radial_at(top left, ellipse farthest-corner,#B24C63 15%,#5438DC 100%, #357DED 20%  #56EEF4 25% #32E875 35%);
+///     }
+/// @example css - CSS
+///  .foo {
+///       background-image: -webkit-radial-gradient(top left, circle 25em, #f00, #000);
+///       background-image: -moz-radial-gradient(top left, circle 25em, #f00, #000);
+///       background-image: -o-radial-gradient(top left, circle 25em, #f00, #000);
+///       background-image: -ms-radial-gradient(top left, circle 25em, #f00, #000);
+///       background-image: radial-gradient(circle 25em at top left, #f00, #000);
+///  }
+///
+///  .bar {
+///      background-image: -webkit-radial-gradient(top left, ellipse farthest-corner, #B24C63 15%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 100%);
+///       background-image: -moz-radial-gradient(top left, ellipse farthest-corner, #B24C63 15%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 100%);
+///       background-image: -o-radial-gradient(top left, ellipse farthest-corner, #B24C63 15%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 100%);
+///       background-image: -ms-radial-gradient(top left, ellipse farthest-corner, #B24C63 15%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 100%);
+///       background-image: radial-gradient(ellipse farthest-corner at top left, #B24C63 15%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 100%);
+///  }
+
+@mixin radial_at($position,$shape,$fromcolor,$tocolor ,$colors:false){
+  @if $colors{
+     @each $prefix in $prefixes{
+       background-image : unquote('-#{$prefix}-radial-gradient(#{$position,$shape,$fromcolor,colors($colors),$tocolor})');
+    }
+       background-image: unquote('radial-gradient(#{$shape at $position,$fromcolor,colors($colors),$tocolor})');
+  }
+  @else{
+    @each $prefix in $prefixes{
+      background-image : unquote('-#{$prefix}-radial-gradient(#{$position,$shape,$fromcolor,$tocolor})');
+    }
+      background-image: unquote('radial-gradient(#{$shape at $position,$fromcolor,$tocolor})');
+  }
+}
+
+
+
+
+//*-----------------------------------------
+//* repeating radial gradient mixin
+//*-----------------------------------------
+///  creates an  background repeating radial gradient  with Specific position
+/// ---
+/// #### Syntax :
+/// ```markup
+///     repeatradial([ circle || <length> ] | [ ellipse || [<length> | <percentage> ]{2}] | <color-stop> , <color-stop> [ , <color-stop> ]+);
+/// ```
+/// @param {circle | ellipse | color} $parameter1   -  set The gradient shape or starting color
+/// @param {color-stop} $parameter2   -   set The gradient color
+/// @param {color-stop} $arguments [false]   -  set multiple color stops
+/// @example  scss - SCSS
+///  .foo{
+///       @include  repeatradial(  #D3B88C 40px ,#f0f0f0 80px);
+///     }
+///  .bar{
+///       @include  repeatradial( circle,#222 20px, #D3B88C 40px #f0f0f0 80px);
+///     }
+/// @example css - CSS
+///  .foo {
+///        background-image: -webkit-repeating-radial-gradient(#D3B88C 40px, #f0f0f0 80px );
+///        background-image: -moz-repeating-radial-gradient(#D3B88C 40px, #f0f0f0 80px );
+///        background-image: -o-repeating-radial-gradient(#D3B88C 40px, #f0f0f0 80px );
+///        background-image: -ms-repeating-radial-gradient(#D3B88C 40px, #f0f0f0 80px );
+///        background-image:  repeating-radial-gradient(#D3B88C 40px, #f0f0f0 80px );
+///  }
+///
+///  .bar {
+///        background-image: -webkit-repeating-radial-gradient(circle, #222 20px , #D3B88C 40px, #f0f0f0 80px);
+///        background-image: -moz-repeating-radial-gradient(circle, #222 20px , #D3B88C 40px, #f0f0f0 80px);
+///        background-image: -o-repeating-radial-gradient(circle, #222 20px , #D3B88C 40px, #f0f0f0 80px);
+///        background-image: -ms-repeating-radial-gradient(circle, #222 20px , #D3B88C 40px, #f0f0f0 80px);
+///        background-image:  repeating-radial-gradient(circle, #222 20px , #D3B88C 40px, #f0f0f0 80px);
+///  }
+@mixin repeatradial( $parameter1,$parameter2,$arguments:false){
+  @each $prefix in $prefixes{
+      background-image: unquote('-#{$prefix}-repeating-radial-gradient(#{$parameter1,$parameter2 if( $arguments, "," colors($arguments),'' ) })');
+    }
+      background-image: unquote(' repeating-radial-gradient(#{ $parameter1,$parameter2 if( $arguments, "," colors($arguments),'' )})');
+}
+
+//*-----------------------------------------
+//* repeating radial gradient mixin
+//*-----------------------------------------
+///  creates an  background  repeating radial gradient  with Specific position
+/// ---
+/// #### Syntax :
+/// ```markup
+///     repeatradial_at(<position> , [ circle || <length> ] | [ ellipse || [<length> | <percentage> ]{2}] <color-stop>,  [ <color-stop> ]+ );
+/// ```
+/// @param {keyword | percentage | length} $position   -    set The gradient position
+/// @param {circle | ellipse} $shape   - set The gradient shape
+/// @param {color} $fromcolor   -  set The gradient start-color
+/// @param {color} $tocolor     -  set The gradient last-color)
+/// @param {color-stop} $colors [false]   -  set multiple color stops
+/// @example  scss - SCSS
+/// .foo{
+///     @include repeatradial_at(top left,circle 25em,#f00 15%,#000 25%);
+///     }
+///  .bar{
+///     @include repeatradial_at(top left, ellipse farthest-corner,#B24C63 10%,#5438DC 15%, #357DED 20%  #56EEF4 25% #32E875 35%);
+///     }
+/// @example css - CSS
+///  .foo {
+///       background-image: -webkit-repeating-radial-gradient(top left, circle 25em, #f00 15%, #000 25%);
+///       background-image: -moz-repeating-radial-gradient(top left, circle 25em, #f00 15%, #000 25%);
+///       background-image: -o-repeating-radial-gradient(top left, circle 25em, #f00 15%, #000 25%);
+///       background-image: -ms-repeating-radial-gradient(top left, circle 25em, #f00 15%, #000 25%);
+///       background-image: repeating-radial-gradient(circle 25em at top left, #f00 15%, #000 25%);
+///  }
+///
+///  .bar {
+///          background-image: -webkit-repeating-radial-gradient(top left, ellipse farthest-corner, #B24C63 10%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 15%);
+///          background-image: -moz-repeating-radial-gradient(top left, ellipse farthest-corner, #B24C63 10%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 15%);
+///          background-image: -o-repeating-radial-gradient(top left, ellipse farthest-corner, #B24C63 10%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 15%);
+///          background-image: -ms-repeating-radial-gradient(top left, ellipse farthest-corner, #B24C63 10%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 15%);
+///          background-image: repeating-radial-gradient(ellipse farthest-corner at top left, #B24C63 10%, #357DED 20%, #56EEF4 25%, #32E875 35%, #5438DC 15%);
+///  }
+@mixin repeatradial_at($position,$shape,$fromcolor,$tocolor ,$colors:false){
+  @if $colors{
+     @each $prefix in $prefixes{
+       background-image : unquote('-#{$prefix}-repeating-radial-gradient(#{$position,$shape,$fromcolor,colors($colors),$tocolor})');
+    }
+       background-image: unquote('repeating-radial-gradient(#{$shape at $position,$fromcolor,colors($colors),$tocolor})');
+  }
+  @else{
+    @each $prefix in $prefixes{
+      background-image : unquote('-#{$prefix}-repeating-radial-gradient(#{$position,$shape,$fromcolor,$tocolor})');
+    }
+      background-image: unquote('repeating-radial-gradient(#{$shape at $position,$fromcolor,$tocolor})');
+  }
+}
+
+// @example  scss - SCSS
+//  .foo{
+//    @include bg-size(100%,75%);
+//  }
+// @example css - css
+//.foo {
+//  -webkit-background-size: 100% 75%;
+//  background-size: 100% 75%;
+//}
+
+@mixin bg-size($width:cover,$height:false){
+@if $height{
+     @include prefix('background-size', $width $height, webkit);
+ }@else{
+    @include prefix('background-size', $width, webkit);
+ }
+}
+
+// @example  scss - SCSS
+//  .foo{
+//    @include bgs-size(100% 20%,15% 8%, 18% 78%);
+//  }
+// @example css - css
+//.foo {
+//    -webkit-background-size: 100% 20%, 15% 8%, 18% 78%;
+//    background-size: 100% 20%, 15% 8%, 18% 78%;
+//}
+@mixin bgs-size($arguments...){
+@include  prefix('background-size', $arguments, webkit);
+}
+

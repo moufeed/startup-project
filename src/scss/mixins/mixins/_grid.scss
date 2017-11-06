@@ -1,0 +1,241 @@
+////
+/// @group Layout
+/// @since 1.0.0
+////
+
+
+
+///  create basic responsive layout
+/// ---
+/// #### Syntax :
+/// ```markup
+///     brl(<length> , <length>, left | right [,classname{3}]? );
+/// ```
+/// @param {number}  $fullwidth  -   Full width length
+/// @param {number}  $maincontent  - set width of  main content
+/// @param {keyword} $float  -       set float to left or right
+/// @param {string}  $class [false]  -   set class names of layout elements
+/// @example  scss - SCSS
+///    // Example A
+///    @include brl(960,725,right);
+///    // Example B
+///    @include brl(1200, 805 , left , wrapper content sidebar  );
+///
+/// @example css - CSS
+///   //  Example A
+///    .wrap {
+///      position: relative;
+///    }
+///    .wrap:after, .wrap:before {
+///      display: table;
+///      content: " ";
+///    }
+///    .wrap:after {
+///      clear: both;
+///    }
+///
+///    .main, .side {
+///      float: right;
+///      position: relative;
+///      -webkit-box-sizing: border-box;
+///      -moz-box-sizing: border-box;
+///      box-sizing: border-box;
+///    }
+///
+///    .main {
+///      width: 75.52083%;
+///    }
+///
+///    .side {
+///      width: 24.47917%;
+///    }
+///
+///   //  Example B
+///  .wrapper {
+///       position: relative;
+///     }
+///     .wrapper:after, .wrapper:before {
+///       display: table;
+///       content: " ";
+///     }
+///     .wrapper:after {
+///       clear: both;
+///     }
+///
+///     .content, .sidebar {
+///       float: left;
+///       position: relative;
+///       -webkit-box-sizing: border-box;
+///       -moz-box-sizing: border-box;
+///       box-sizing: border-box;
+///     }
+///
+///     .content {
+///       width: 67.08333%;
+///     }
+///
+///     .sidebar {
+///       width: 32.91667%;
+///     }
+///
+ @mixin brl($fullwidth, $maincontent, $float, $class:false) {
+     $wrap : 'wrap';
+     $content :'main';
+     $aside :  'side';
+      @if $class {
+         $wrap : nth($class,1);
+         $content :nth($class,2);
+         $aside :  nth($class,3);
+      }
+     .#{$wrap} {
+         position: relative;
+         &:after,
+         &:before {
+             display: table;
+             content: " ";
+         }
+         &:after {
+             clear: both;
+         }
+     }
+     .#{$content},
+     .#{$aside} {
+         float: $float;
+         position: relative;
+         -webkit-box-sizing: border-box;
+         -moz-box-sizing: border-box;
+         box-sizing: border-box;
+     }
+     .#{$content} {
+         width: percentage($maincontent / $fullwidth);
+     }
+     .#{$aside} {
+         width: percentage(($fullwidth - $maincontent) / $fullwidth);
+     }
+ }
+
+
+///  create basic responsive grid
+/// ---
+/// #### Syntax :
+/// ```markup
+///     cols(<length> , <columns-Number>, left | right [,classname{2}]? );
+/// ```
+/// @param {number}  $fullwidth        -   set full width length
+/// @param {number}  $columns          -   set number of  columns
+/// @param {keyword} $float            -   set float to left or right
+/// @param {string}  $class [row col]  -   set class names of grid elements
+/// @example  scss - SCSS
+///    // Example A
+///       @include cols(1200,5,right);
+///    // Example B
+///       @include cols(768,4,left,cols col);
+/// @example css - CSS
+///   //  Example A
+///  .row {
+///    width: 100%;
+///    max-width: 1200px;
+///    margin: 0 auto;
+///    padding: 0; }
+///    .row:after, .row:before {
+///      display: table;
+///      content: " "; }
+///    .row:after {
+///      clear: both; }
+///
+///  .col1 {
+///    width: 20%; }
+///
+///  .col2 {
+///    width: 40%; }
+///
+///  .col3 {
+///    width: 60%; }
+///
+///  .col4 {
+///    width: 80%; }
+///
+///  .col5 {
+///    width: 100%; }
+///
+///  .col1, .col2, .col3, .col4, .col5 {
+///    position: relative;
+///    margin: 0;
+///    float: right;
+///    -webkit-box-sizing: border-box;
+///    -moz-box-sizing: border-box;
+///    box-sizing: border-box; }
+///
+///    // Example B
+///    .cols {
+///      width: 100%;
+///      max-width: 768px;
+///      margin: 0 auto;
+///      padding: 0; }
+///      .cols:after, .cols:before {
+///        display: table;
+///        content: " "; }
+///      .cols:after {
+///        clear: both; }
+///
+///    .col1 {
+///      width: 25%; }
+///
+///    .col2 {
+///      width: 50%; }
+///
+///    .col3 {
+///      width: 75%; }
+///
+///    .col4 {
+///      width: 100%; }
+///
+///    .col1, .col2, .col3, .col4 {
+///      position: relative;
+///      margin: 0;
+///      float: left;
+///      -webkit-box-sizing: border-box;
+///      -moz-box-sizing: border-box;
+///      box-sizing: border-box; }
+///
+@mixin cols($fullwidth,$columns,$float,$class:row col){
+  $column: $fullwidth / $columns ;
+    $cols: null;
+  .#{nth($class , 1)}{
+       width: 100%;
+       max-width:$fullwidth * 1px ;
+       margin: 0 auto;
+       padding: 0;
+      &:after,&:before{
+         display: table;
+         content: " ";
+      }
+      &:after{
+         clear: both;
+      }
+  }
+  @for $i from 1 through  $columns{
+    $cols : " #{$cols} .#{nth($class,2)}#{$i},";
+    .#{nth($class , 2)}#{$i}{
+      width: percentage($column * $i / $fullwidth);
+    }
+   }
+   #{$cols}{
+      position: relative;
+      margin:0;
+      float:$float;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+   }
+  }
+
+
+
+
+
+
+
+
+
+

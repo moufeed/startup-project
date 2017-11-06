@@ -1,0 +1,82 @@
+
+//*-----------------------------------------
+//* text shadow mixin
+//*-----------------------------------------
+
+@mixin text-shadow ($string...) {
+    text-shadow: $string;
+}
+
+//*-----------------------------------------
+//* long text-shadow mixin
+//*-----------------------------------------
+
+@mixin longshadow($direction,$length,$color) {
+  text-shadow:longshadow($direction,$length,$color);
+}
+
+
+////EX:
+// @include longshadow(topright,20,red) ;  [topleft | topright | bottomleft | bottomright ]
+//
+
+
+
+
+//*-----------------------------------------
+//* box shadow mixin
+//*-----------------------------------------
+@mixin box_shadow($shadows...) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+
+////EX :
+//@include box_shadow(0px 4px 5px #666, 2px 6px 10px #999);
+
+
+//*-----------------------------------------
+//* long box shadow mixin
+//*-----------------------------------------
+@mixin boxshadows($direction ,$length,$blur,$thick,$color,$inset:false){
+  -moz-box-shadow:mbs($direction ,$length,$blur,$thick,$color,$inset);
+  -webkit-box-shadow:mbs($direction ,$length,$blur,$thick,$color,$inset);
+  box-shadow:mbs($direction ,$length,$blur,$thick,$color,$inset);
+}
+
+
+//.bar {
+//        box-shadow: mbs(topleft,5,2px,3px,#000,inset);
+//	@include  boxshadows(topright,5,2px,3px,#000,inset);
+//}
+
+
+@function make3dtext($color, $x:1, $y: 1, $darken: 1, $length:10) {
+    $shadow: 0px 0px 0 darken($color, 13%);
+    $xshadow: $x* $length +1px;
+    $yshadow: $y* $length +1px;
+    $dshadow: $length - 1px;
+    @for $i from 1 through $length {
+        $shadow: $shadow, ($x* $i +0px) ($y* $i +0px) 0 darken($color, $darken * ($length + $i));
+    }
+    $shadow:$shadow,
+    $xshadow $yshadow $dshadow rgba(0, 0, 0, 0.6),
+    $xshadow $yshadow 1px rgba(0, 0, 0, 0.5);
+    @return $shadow;
+}
+
+
+
+@mixin make3d($color, $x: 1, $y: 1, $darken: 1, $length:10) {
+    color: $color;
+    text-shadow: make3dtext($color, $x, $y, $darken, $length);
+}
+
+
+
+//.foo{
+//	font-size: 15em;
+//	@include make3d(#0b0,-1,1);
+//	}

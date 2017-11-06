@@ -1,0 +1,89 @@
+////
+/// @group position
+/// @since 1.0.0
+/// @access public
+////
+
+/// Fix the Difference between length of Values and length of Edges.
+/// @param {numbers} $values      -  Values List
+/// @param {integer} $counter     -  the loop counter value "from position [for loop]"
+@function val-length($values,$counter){
+  $Length: length($values);
+    @while $Length < $counter {
+         @return  $counter - $Length;
+    }
+}
+//  ---- Position Property ----
+/// The position property specifies the type of positioning method used for an element
+/// @param {keyword} $position   - position values [static | relative | fixed | absolute ]
+/// @param {keyword} $edges      - sets the edges of an element [top | left | bottom | right ]
+/// @param {number} $values     - sets the values of an edges [px | em | % | ... ]
+/// @example   scss - SCSS
+///      .foo{
+///        @include position(absolute , top left , 15px);
+///      }
+/// @example css - CSS
+///     .foo {
+///          position: absolute;
+///          top: 15px;
+///          left: 15px;
+///     }
+@mixin position($position,$edges,$values){
+  position : $position;
+  @for $i  from 1 through length($edges){
+      #{nth($edges,$i)}:if(length($values)<$i, nth($values,val-length($values,$i)), nth($values,$i));
+    }
+}
+
+// ---- position[absolute] ----
+/// Positioned relative to the nearest positioned ancestor (instead of positioned relative to the viewport).
+/// @param {keyword} $edges - sets the edges of an element [top | left | bottom | right ]
+/// @param {number} $values - sets the values of an edges [px | em | % | ... ]
+/// @example   scss - SCSS
+///      .foo{
+///        @include absolute(top left , 5% 15px);
+///      }
+/// @example css - CSS
+///     .foo {
+///          position: absolute;
+///          top: 5%;
+///          left: 15px;
+///     }
+@mixin absolute($edges,$values) {
+        @include position(absolute,$edges,$values);
+}
+ // ---- position[fixed] ----
+/// Positioned relative to the viewport, which means it always stays in the same place even if the page is scrolled.
+/// @since 1.0.0
+/// @param {keyword} $edges - sets the edges of an element [top | left | bottom | right ]
+/// @param {number} $values - sets the values of an edges [px | em | % | ... ]
+/// @example   scss - SCSS
+///      .foo{
+///        @include fixed(top left , 5% 15px);
+///      }
+/// @example css - CSS
+///     .foo {
+///          position: fixed;
+///          top: 5%;
+///          left: 15px;
+///     }
+@mixin fixed($edges,$values) {
+        @include position(fixed,$edges,$values);
+}
+ // ---- position[relative] ----
+/// normal position
+/// @param {keyword} $edges - sets the edges of an element [top | left | bottom | right ]
+/// @param {number} $values - sets the values of an edges [px | em | % | ... ]
+/// @example  scss - SCSS
+///      .foo{
+///        @include relative(top left , 5% 15px);
+///      }
+/// @example css - CSS
+///     .foo {
+///          position: relative;
+///          top: 5%;
+///          left: 15px;
+///     }
+@mixin relative($edges,$values) {
+        @include position(relative,$edges,$values);
+}

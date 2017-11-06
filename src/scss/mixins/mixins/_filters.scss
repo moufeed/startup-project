@@ -1,0 +1,417 @@
+////
+/// @group filters
+/// @since 1.0.0
+////
+
+/// ### Filter
+/// The filter property provides for effects like blurring or color shifting on an element’s rendering before the element is displayed. Filters are commonly used to adjust the rendering of an image, a background, or a border.
+///   `filter` mixin help you to apply Multiple filter functions in normal status and hover status as you want
+///
+/// #### Syntax :
+/// ```markup
+///   filter(<filter-function> [<filter-function>]*  [ , <filter-function> [<filter-function>]* ]?);
+/// ```
+/// @param {string} $argument -   css filter functions in normal status
+/// @param {string} $hover [false] - css filter functions in  hover status
+/// @example scss - scss
+/// .foo{
+///     @include filter(contrast(4) brightness(3));
+/// }
+/// .bar{
+///     @include filter(contrast(4) brightness(3), contrast(1) brightness(1));
+/// }
+/// @example css - css
+/// .foo {
+///    -webkit-filter: contrast(4) brightness(3);
+///    filter: contrast(4) brightness(3);
+/// }
+/// .bar {
+///   -webkit-filter: blur(4px) brightness(0.5);
+///   filter: blur(4px) brightness(0.5);
+/// }
+/// .bar:hover {
+///     -webkit-filter: blur(0) brightness(1);
+///     filter: blur(0) brightness(1);
+/// }
+@mixin filter($argument,$hover:false){
+     -webkit-filter:$argument;
+      filter:$argument;
+  @if $hover{
+     &:hover{
+    -webkit-filter:$hover;
+      filter:$hover;
+     }
+  }
+}
+
+
+/// ### css_filter
+/// The filter property provides for effects like blurring or color shifting on an element’s rendering before the element is displayed. Filters are commonly used to adjust the rendering of an image, a background, or a border.
+///   `filter` mixin help you to apply Multiple filter functions in normal status and hover status as you want
+///
+/// #### Syntax :
+/// ```markup
+///   css_filter(<filter-function> , <filter-value> [,<filter-value>]?);
+/// ```
+/// @param {name} $filterFunction - Css Filter Function Name
+/// @param {string} $value - Css Filter Function  value
+/// @param {string} $hover [false] - Css Filter Function  value  hover status
+@mixin css_filter($filterFunction,$value,$hover:false){
+  -webkit-filter:$filterFunction#{'(#{$value})'};
+    filter: $filterFunction#{'(#{$value})'};
+  @if $hover{
+    &:hover{
+      -webkit-filter:$filterFunction#{'(#{$hover})'};
+      filter:$filterFunction#{'(#{$hover})'};
+    }
+  }
+}
+
+/// ### grayscale()
+/// Converts the input image to grayscale
+/// #### Syntax :
+/// ```markup
+///   grayscale([ <number> | <percentage> ] [, [ <number> | <percentage> ] ]?);
+/// ```
+/// @param {length} $value - set the proportion of the conversion
+/// @param {length} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include grayscale(1,0);
+/// }
+/// .bar{
+///    @include grayscale(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: grayscale(1);
+///   filter: grayscale(1);
+/// }
+/// .foo:hover {
+///   -webkit-filter: grayscale(0);
+///   filter: grayscale(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: grayscale(0.5);
+///   filter: grayscale(0.5);
+/// }
+
+@mixin grayscale($value,$hover:false){
+   @include css_filter(grayscale,$value,$hover);
+}
+/// Converts the input image to sepia
+/// #### Syntax :
+/// ```markup
+///   sepia([ <number> | <percentage> ] [, [ <number> | <percentage>] ]?);
+/// ```
+/// @param {number} $value - set the proportion of the conversion
+/// @param {number} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include sepia(1,0);
+/// }
+/// .bar{
+///    @include sepia(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: sepia(1);
+///   filter: sepia(1);
+/// }
+/// .foo:hover {
+///   -webkit-filter: sepia(0);
+///   filter: sepia(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: sepia(0.5);
+///   filter: sepia(0.5);
+/// }
+@mixin sepia($value,$hover:false){
+   @include css_filter(sepia,$value,$hover);
+}
+
+/// Saturates the input image
+/// #### Syntax
+/// ```markup
+///     saturate([ <number> | <percentage> ]  [,[ <number> | <percentage> ]]? );
+/// ```
+/// @param {number} $value  - set the proportion of the conversion
+/// @param {number} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include saturate(1,0);
+/// }
+/// .bar{
+///    @include saturate(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: saturate(1);
+///   filter: saturate(1);
+/// }
+/// .foo:hover {
+///   -webkit-filter: saturate(0);
+///   filter: saturate(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: saturate(0.5);
+///   filter: saturate(0.5);
+/// }
+@mixin saturate($value,$hover:false){
+   @include css_filter(saturate,$value,$hover);
+}
+/// ### hue-rotate()
+/// Applies a hue rotation on the input image.
+/// #### Syntax :
+/// ```markup
+///   hue-rotate(<angle>,  [ false || true , <angle>  ]);
+/// ```
+/// @param {Angle} $value - set the number of degrees around the color circle
+/// @param {Angle} $hover [false] -  set the number of degrees around the color circle in hover status
+/// @example scss - scss
+/// .foo{
+///  @include hue-rotate(45deg,0);
+/// }
+/// .bar{
+///    @include hue-rotate(90deg);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: hue-rotate(45deg);
+///   filter: hue-rotate(45deg);
+/// }
+/// .foo:hover {
+///   -webkit-filter: hue-rotate(0);
+///   filter: hue-rotate(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: hue-rotate(90deg);
+///   filter: hue-rotate(90deg);
+/// }
+@mixin hue-rotate($value,$hover:false){
+   @include css_filter(hue-rotate,$value,$hover);
+}
+/// ### invert()
+/// Inverts the samples in the input image
+/// #### Syntax :
+/// ```markup
+///   invert([ <number> | <percentage> ] [, [ <number> | <percentage> ] ]?);
+/// ```
+/// @param {number} $value - set the proportion of the conversion
+/// @param {number} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include invert(1,0);
+/// }
+/// .bar{
+///    @include invert(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: invert(1);
+///   filter: invert(1);
+/// }
+/// .foo:hover {
+///   -webkit-filter: invert(0);
+///   filter: invert(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: invert(0.5);
+///   filter: invert(0.5);
+/// }
+@mixin invert($value,$hover:false){
+   @include css_filter(invert,$value,$hover);
+}
+/// ### opacity()
+/// Applies transparency to the samples in the input image.
+/// #### Syntax :
+/// ```markup
+///   opacity([ <number> | <percentage> ] [, [ <number> | <percentage> ]]?);
+/// ```
+/// @param {amount} $value - set the proportion of the conversion
+/// @param {boolean} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include opacity(1,0);
+/// }
+/// .bar{
+///    @include opacity(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: opacity(1);
+///   filter: opacity(1);
+/// }
+/// .foo:hover {
+///   -webkit-filter: opacity(0);
+///   filter: opacity(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: opacity(0.5);
+///   filter: opacity(0.5);
+/// }
+@mixin opacity($value,$hover:false){
+   @include css_filter(opacity,$value,$hover);
+}
+/// ### brightness()
+/// Applies a linear multiplier to input image, making it appear more or less bright.
+/// #### Syntax :
+/// ```markup
+///   brightness([ <number> | <percentage> ] [, [ <number> | <percentage> ]]?);
+/// ```
+/// @param {number} $value - set the proportion of the conversion
+/// @param {number} $hover [false] -  set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include brightness(3,0);
+/// }
+/// .bar{
+///    @include brightness(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: brightness(3);
+///   filter: brightness(3);
+/// }
+/// .foo:hover {
+///   -webkit-filter: brightness(0);
+///   filter: brightness(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: brightness(0.5);
+///   filter: brightness(0.5);
+/// }
+@mixin brightness($value,$hover:false){
+   @include css_filter(brightness,$value,$hover);
+}
+/// ### contrast()
+/// Adjusts the contrast of the input.
+/// #### Syntax :
+/// ```markup
+///   contrast([ <number> | <percentage> ] [, [ <number> | <percentage> ]]?);
+/// ```
+/// @param {number} $value - set the proportion of the conversion
+/// @param {number} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include contrast(3,0);
+/// }
+/// .bar{
+///    @include contrast(0.5);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: contrast(3);
+///   filter: contrast(3);
+/// }
+/// .foo:hover {
+///   -webkit-filter: contrast(0);
+///   filter: contrast(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: contrast(0.5);
+///   filter: contrast(0.5);
+/// }
+@mixin contrast($value,$hover:false){
+   @include css_filter(contrast,$value,$hover);
+}
+/// ### blur()
+/// Applies a Gaussian blur to the input image.
+/// #### Syntax :
+/// ```markup
+///   blur(<length> [, <length> ]?);
+/// ```
+/// @param {length} $value - set the proportion of the conversion
+/// @param {length} $hover [false] - set the proportion of the conversion in hover status
+/// @example scss - scss
+/// .foo{
+///  @include blur(5px,0);
+/// }
+/// .bar{
+///    @include blur(15px);
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter: blur(5px);
+///   filter: blur(5px);
+/// }
+/// .foo:hover {
+///   -webkit-filter: blur(0);
+///   filter: blur(0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: blur(15px);
+///   filter: blur(15px);
+/// }
+@mixin blur($value,$hover:false){
+   @include css_filter(blur,$value,$hover);
+}
+/// ### drop-shadow()
+/// Applies a drop shadow effect to the input image.
+/// This function is similar to the more established box-shadow property
+/// #### Syntax :
+/// ```markup
+///   drop-shadow(<length>{4} [, <length>{4} ]?);
+/// ```
+/// @param {number} $value - [horizontal offset] [vertical offset] [blur radius] [color];
+/// @param {number} $hover [false] - [horizontal offset] [vertical offset] [blur radius] [color] in hover status
+/// @example scss - scss
+/// .foo{
+///  @include   drop-shadow(5px 5px 5px rgba(0,0,0,0.9),0 0 0);
+/// }
+/// .bar{
+///    @include  drop-shadow(5px 5px 15px rgba(0,255,200,0.9));
+/// }
+/// @example css - css
+/// .foo {
+///   -webkit-filter:  drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.9));
+///   filter:  drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.9));
+/// }
+/// .foo:hover {
+///   -webkit-filter:   drop-shadow(0 0 0);
+///   filter:   drop-shadow(0 0 0);
+/// }
+///
+/// .bar {
+///   -webkit-filter: drop-shadow(5px 5px 15px rgba(0, 255, 200, 0.9));
+///   filter: drop-shadow(5px 5px 15px rgba(0, 255, 200, 0.9));
+/// }
+@mixin drop-shadow($value,$hover:false){
+   @include css_filter(drop-shadow,$value,$hover);
+}
+
+
+/// ### Reset filters for IE
+/// When you need to remove a Css Filter, do not forget to use this to reset
+/// the IE filter for IE9 and below.
+/// @param {string} $filter - Name of Css Filter you want to Remove
+/// @example scss - scss
+/// .foo{
+///   @include resetfilter(gradient);
+/// }
+/// .bar{
+///   @include resetfilter(alpha);
+/// }
+/// @example css - css
+/// .foo {
+///   -ms-filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+///   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+/// }
+/// .bar {
+///   -ms-filter: progid:DXImageTransform.Microsoft.alpha(enabled = false);
+///   filter: progid:DXImageTransform.Microsoft.alpha(enabled = false);
+/// }
+@mixin resetfilter($filter) {
+  -ms-filter: #{'progid:DXImageTransform.Microsoft.#{$filter}(enabled = false)'};
+  filter: #{'progid:DXImageTransform.Microsoft.#{$filter}(enabled = false)'};
+}
+

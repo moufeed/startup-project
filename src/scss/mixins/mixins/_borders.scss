@@ -1,0 +1,66 @@
+////
+/// @group borders
+/// @since 1.0.0
+////
+
+///  Specify an image to be used instead of the normal border around an element.
+/// ---
+/// #### Syntax :
+/// ```markup
+///   borderimg(  width[number|%] ,source, slice[number|%|fill] , outset[length|number] ,[stretch|repeat|round]  );
+/// ```
+/// @param {Number} $width  [null] -  Width of the borders
+/// @param {Link}   $source [null] - path to the image to be used as a border
+/// @param {Number} $slice  [null] - How to slice the border image
+/// @param {string} $repeat [null] - Whether the border image should be repeated, rounded or stretched
+/// @example  scss - SCSS
+/// .foo{
+///      @include borderimg(10,"border.png",10,round);
+///     }
+/// @example css - CSS
+/// .foo {
+///          border: 10px solid transparent;
+///          -webkit-border-image: url(border.png) 10 round;
+///          -o-border-image: url(border.png) 10 round;
+///          border-image: url(border.png) 10 round;
+///      }
+
+@mixin borderimg($width,$source,$slice,$repeat){
+    border: #{$width}px solid transparent;
+    -webkit-border-image: url(#{$source}) $slice $repeat;
+    -o-border-image: url(#{$source}) $slice $repeat;
+    border-image: url(#{$source}) $slice $repeat;
+}
+
+
+
+/// Style of the border
+/// ---
+/// #### Syntax :
+/// ```markup
+///   border( border-sides ,border-width ,border-style,border-color );
+/// ```
+/// @param {string} $sides [null] - Specifies the border sides
+/// @param {Number} $width [null] - Specifies the Width of the borders
+/// @param {string} $style [null] - Specifies the style of the borders
+/// @param {color}  $color [null] - Specifies the color of the borders
+/// @example  scss - SCSS
+/// .foo{
+///     @include border(all,2px ,solid dashed,#000 rgba(0,0,0,.3) #f00);
+///     }
+/// @example css - CSS
+///  .foo {
+///          border-top: 2px solid #000;
+///          border-right: 2px dashed rgba(0, 0, 0, 0.3);
+///          border-bottom: 2px dashed #f00;
+///          border-left: 2px dashed #f00;
+///        }
+@mixin border($sides,$width:null,$style:null,$color:null){
+    $sides: null !default;
+    @if  ($sides ==  all)    {
+        $sides : top right bottom left;
+    }
+  @for $i  from 1 through length($sides){
+    border-#{nth($sides,$i)} : attributes($width ,$i) attributes($style ,$i) attributes($color ,$i);
+  }
+}

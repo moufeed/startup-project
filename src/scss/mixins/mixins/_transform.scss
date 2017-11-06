@@ -1,0 +1,496 @@
+////
+/// @group Transform
+/// @since 1.0.0
+////
+
+
+///   The transform mixin applies a 2D or 3D transformation to an element
+/// ---
+/// #### Syntax :
+/// ```markup
+///     transform(none | <transform-list>);
+/// ```
+/// @param {string} $argument - a list of one or more transform functions
+/// @example  scss - SCSS
+///      .foo{
+///           @include transform(skewX(30deg));
+///          }
+/// @example css - CSS
+///      .foo {
+///            -webkit-transform: skewX(30deg);
+///            -ms-transform: skewX(30deg);
+///            transform: skewX(30deg);
+///          }
+ @mixin transform($argument...){
+   @include prefix(transform, $argument, webkit ms) ;
+ }
+
+///  The  origin mixin is used to change the position of the origin of transformation of an element
+/// ---
+/// #### Syntax :
+/// ```markup
+///     origin([ <percentage> | <length> | left | center | right | top | bottom] | [ [ <percentage> | <length> | left | center | right ] && [ <percentage> | <length> | top | center | bottom ] ] <length>?);
+/// ```
+/// @param {string} $argument -  change the position of transformed elements.
+/// @example  scss - SCSS
+///      .foo{
+///           @include origin(100% 100%);
+///          }
+/// @example css - CSS
+///      .foo {
+///            -webkit-transform-origin: 100% 100%;
+///             -moz-transform-origin: 100% 100%;
+///             -ms-transform-origin: 100% 100%;
+///             -o-transform-origin: 100% 100%;
+///             transform-origin: 100% 100%;
+///          }
+ @mixin origin($argument...){
+   @include fix-all(transform-origin, $argument) ;
+ }
+
+///  The transform-style mixin determines if the children of the element are positioned in the 3D-space or are flattened in the plane of the element.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     transform-style(flat | preserve-3d);
+/// ```
+/// @param {string} $argument - specifies how nested elements are rendered in 3D space.
+/// @example  scss - SCSS
+///      .foo{
+///           @include transform-style(preserve-3d);
+///          }
+/// @example css - CSS
+///      .foo {
+///              -webkit-transform-style: preserve-3d;
+///              -moz-transform-style: preserve-3d;
+///              transform-style: preserve-3d;
+///          }
+@mixin transform-style($argument){
+   @include prefix(transform-style, $argument, webkit moz ) ;
+ }
+
+///   The perspective mixin defines how many pixels a 3D element is placed from the view. This property allows you to change the perspective on how 3D elements are viewed.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     perspective(none | <length>);
+/// ```
+/// @param {number} $value [none] - How far the element is placed from the view
+/// @example  scss - SCSS
+///      .foo{
+///          @include perspective(350px);
+///          }
+/// @example css - CSS
+///      .foo {
+///               -webkit-perspective: 350px;
+///               -moz-perspective: 350px;
+///               perspective: 350px;
+///          }
+  @mixin perspective($value:none){
+   @include prefix(perspective, $value, webkit moz ) ;
+ }
+///  The perspective-origin mixin defines where a 3D element is based in the x- and the y-axis. This property allows you to change the bottom position of 3D elements.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     perspective-origin( [ <percentage> | <length> | left | center | right | top | bottom] | [ [ <percentage> | <length> | left | center | right ] && [ <percentage> | <length> | top | center | bottom ] ] );
+/// ```
+/// @param {string} $argument [50% 50%] -  Defining where the view is placed at the x-axis and  y-axis
+/// @example  scss - SCSS
+///      .foo{
+///           @include perspective-origin(bottom left);
+///          }
+/// @example css - CSS
+///      .foo {
+///                -webkit-perspective-origin: bottom left;
+///                -moz-perspective-origin: bottom left;
+///                perspective-origin: bottom left;
+///          }
+@mixin perspective-origin($argument : 50% 50% ){
+   @include prefix(perspective-origin,$argument, webkit moz ) ;
+ }
+///  used to rotate an element in dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     rotate( <angle>[,<axis>]?);
+/// ```
+/// @param {degrees} $value   -    the angle of the rotation
+/// @param {axis} $axis [false] -   the axis of the rotation
+/// @example  scss - SCSS
+///  .foo{
+///              @include rotate(45deg);
+///        }
+///  .bar{
+///              @include rotate(45deg,y);
+///      }
+/// @example css - CSS
+///   .foo {
+///     -webkit-transform: rotate(45deg);
+///     -ms-transform: rotate(45deg);
+///     transform: rotate(45deg);
+///   }
+///   .bar {
+///     -webkit-transform: rotateY(45deg);
+///     -ms-transform: rotateY(45deg);
+///     transform: rotateY(45deg);
+///   }
+@mixin rotate($value,$axis:false){
+     @if  index( x y z,$axis){
+      $axis  : to_upper_case($axis);
+      $value : unquote('rotate#{$axis}(#{$value})');
+      @include prefix(transform,$value, webkit ms );
+     }@else{
+        @include prefix(transform,unquote('rotate(#{$value})'), webkit ms ) ;
+   }
+}
+///  used to rotate an element in three-dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     rotate(<x-axis-value>,<y-axis-value>,<z-axis-value>,<angle>);
+/// ```
+/// @param {number} $x   -     the x-axis of the rotation
+/// @param {number} $y   -     the y-axis of the rotation
+/// @param {number} $z   -     the z-axis of the rotation
+/// @param {degrees} $angle  -  the angle of the rotation
+/// @example  scss - SCSS
+///  .foo{
+///              @include rotate3d(2, 1, 3, 33deg);
+///        }
+/// @example css - CSS
+///   .foo {
+///       -webkit-transform: rotate3d(2, 1, 3, 33deg);
+///       transform: rotate3d(2, 1, 3, 33deg);
+///   }
+@mixin rotate3d($x,$y,$z,$angle){
+      -webkit-transform:rotate3d($x,$y,$z,$angle);
+      transform:rotate3d($x,$y,$z,$angle);
+  }
+///  used to scale an element up or down, making it appear bigger or smaller.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     scale(<number> [, <number>]?)
+/// ```
+/// @param {number} $x   -    Numerical value of the x-direction
+/// @param {number} $y   -    Optional. Numerical value of the y-direction.
+/// @example  scss - SCSS
+///  .foo{
+///             @include scale(1,2);
+///       }
+/// @example css - CSS
+///   .foo {
+///         -webkit-transform: scale(1, 2);
+///         -ms-transform: scale(1, 2);
+///         transform: scale(1, 2);
+///   }
+@mixin scale($x,$y:false){
+  $scale : if($y,"#{$x,$y}","#{$x}");
+  -webkit-transform:scale(#{$scale}) ;
+  -ms-transform:scale(#{$scale}) ;
+  transform: scale(#{$scale}) ;
+}
+///  used to scale an element up or down, making it appear bigger or smaller. in the direction of the x-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    scaleX(<number>)
+/// ```
+/// @param {number} $value   - Numerical value of the x-direction
+/// @example  scss - SCSS
+///  .foo{
+///             @include scaleX(1.5);
+///       }
+/// @example css - CSS
+///   .foo {
+///           -webkit-transform: scaleX(1.5);
+///           -ms-transform: scaleX(1.5);
+///           transform: scaleX(1.5);
+///   }
+@mixin scaleX($value){
+  -webkit-transform:scaleX($value);
+  -ms-transform:scaleX($value);
+  transform: scaleX($value);
+}
+///  used to scale an element up or down, making it appear bigger or smaller.in the direction of the y-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    scaleY(<number>)
+/// ```
+/// @param {number} $value   - Numerical value of the y-direction
+/// @example  scss - SCSS
+///  .foo{
+///             @include scaleY(1.3);
+///       }
+/// @example css - CSS
+///   .foo {
+///           -webkit-transform: scaleY(1.3);
+///           -ms-transform: scaleY(1.3);
+///           transform: scaleY(1.3);
+///   }
+@mixin scaleY($value){
+  -webkit-transform:scaleY($value);
+  -ms-transform:scaleY($value);
+  transform: scaleY($value);
+}
+///  used to scale an element in the third dimension, along the z-axis..
+/// ---
+/// #### Syntax :
+/// ```markup
+///    scaleZ(<number>)
+/// ```
+/// @param {number} $value   - unitless Numerical value of the z-direction
+/// @example  scss - SCSS
+///  .foo{
+///             @include scaleZ(0.5);
+///       }
+/// @example css - CSS
+///   .foo {
+///           -webkit-transform: scaleZ(0.5);
+///           transform: scaleZ(0.5);
+///   }
+@mixin scaleZ($value){
+  -webkit-transform:scaleZ($value);
+  transform: scaleZ($value);
+}
+///   used to scale an element in three-dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    scale3d(<x-axis-value>,<y-axis-value>,<z-axis-value>)
+/// ```
+/// @param {number} $x   - Numerical value of the x-direction.
+/// @param {number} $y   - Numerical value of the y-direction.
+/// @param {number} $z   - Numerical value of the z-direction.
+/// @example  scss - SCSS
+///  .foo{
+///             @include scale3d(2,1,3);
+///       }
+/// @example css - CSS
+///   .foo {
+///             -webkit-transform: scale3d(2, 1, 3);
+///             transform: scale3d(2, 1, 3);
+///   }
+@mixin scale3d($x,$y,$z){
+  -webkit-transform:scale3d($x,$y,$z);
+  transform: scale3d($x,$y,$z);
+}
+///  used to skew an element along the x- and y-axes.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     skew(<angle-x> [, <angle-y>]?)
+/// ```
+/// @param {degrees} $x   -   The angle of the x-axis
+/// @param {degrees} $y   -    Optional. The angle of the y-axis.
+/// @example  scss - SCSS
+///  .foo{
+///              @include skew(42deg, -12deg);
+///       }
+/// @example css - CSS
+///   .foo {
+///           -webkit-transform: skew(42deg, -12deg);
+///           -ms-transform: skew(42deg, -12deg);
+///           transform: skew(42deg, -12deg);
+///   }
+@mixin skew($x,$y:false){
+  $skew : if($y,"#{$x,$y}","#{$x}");
+  -webkit-transform:skew(#{$skew}) ;
+  -ms-transform:skew(#{$skew}) ;
+  transform: skew(#{$skew}) ;
+}
+///  used to skew an element along the x-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     skewX(<angle>);
+/// ```
+/// @param {degrees} $angle   - The angle of the x-axis
+/// @example  scss - SCSS
+///  .foo{
+///             @include skewX(42deg);
+///       }
+/// @example css - CSS
+///   .foo {
+///             -webkit-transform: skewX(42deg);
+///             -ms-transform: skewX(42deg);
+///             transform: skewX(42deg);
+///   }
+@mixin skewX($angle){
+  -webkit-transform:skewX($angle);
+  -ms-transform:skewX($angle);
+  transform: skewX($angle);
+}
+///  used to skew an element along the y-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     skewY(<angle>);
+/// ```
+/// @param {degrees} $angle   - The angle of the y-axis
+/// @example  scss - SCSS
+///  .foo{
+///       @include skewY(-90deg);
+///       }
+/// @example css - CSS
+///   .foo {
+///        -webkit-transform: skewY(-90deg);
+///        -ms-transform: skewY(-90deg);
+///        transform: skewY(-90deg);
+///   }
+@mixin skewY($angle){
+  -webkit-transform:skewY($angle);
+  -ms-transform:skewY($angle);
+  transform: skewY($angle);
+}
+///  used to move an element in two-dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     translate( <translation-x> [,<translation-y> ]? );
+/// ```
+/// @param {number} $x   -   A translation value along the x-axis.
+/// @param {number} $y   -   Optional. A translation value along the y-axis.
+/// @example  scss - SCSS
+///  .foo{
+///             @include translate(100px,15px);
+///       }
+/// @example css - CSS
+///   .foo {
+///           -webkit-transform: translate(100px, 15px);
+///           -ms-transform: translate(100px, 15px);
+///           transform: translate(100px, 15px);
+///   }
+@mixin translate($x,$y:false){
+   $translate : if($y,"#{$x,$y}","#{$x}");
+  -webkit-transform:translate(#{$translate});
+  -ms-transform:translate(#{$translate});
+  transform: translate(#{$translate});
+}
+///  used to translate an element along the x-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    translateX(<translation-value>)
+/// ```
+/// @param {number} $value  - A translation value of the x-axis
+/// @example  scss - SCSS
+///  .foo{
+///              @include translateX(100px);
+///       }
+/// @example css - CSS
+///   .foo {
+///             -webkit-transform: translateX(100px);
+///             -ms-transform: translateX(100px);
+///             transform: translateX(100px);
+///   }
+@mixin translateX($value){
+  -webkit-transform:translateX($value);
+  -ms-transform:translateX($value);
+  transform: translateX($value);
+}
+///  used to translate an element along the y-axis.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    translateY(<translation-value>)
+/// ```
+/// @param {number} $value  - A translation value of the y-axis
+/// @example  scss - SCSS
+///  .foo{
+///        @include translateY(-120px);
+///       }
+/// @example css - CSS
+///   .foo {
+///        -webkit-transform: translateY(-120px);
+///        -ms-transform: translateY(-120px);
+///        transform: translateY(-120px);
+///   }
+@mixin translateY($value){
+  -webkit-transform:translateY($value);
+  -ms-transform:translateY($value);
+  transform: translateY($value);
+}
+///  used to translate an element along the Z-axis in three-dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    translateZ(<translation-value>)
+/// ```
+/// @param {number} $value  - A translation value of the z-axis
+/// @example  scss - SCSS
+///  .foo{
+///        @include translateZ(30px);
+///       }
+/// @example css - CSS
+///   .foo {
+///        -webkit-transform: translateZ(30px);
+///        transform: translateZ(30px);
+///   }
+@mixin translateZ($value){
+  -webkit-transform:translateZ($value);
+  transform: translateZ($value);
+}
+///  used to move an element in three-dimensional space.
+/// ---
+/// #### Syntax :
+/// ```markup
+///    translate3d(<x-axis-value>,<y-axis-value>,<z-axis-value>)
+/// ```
+/// @param {number} $x   - A translation value of the x-axis.
+/// @param {number} $y   - A translation value of the y-axis.
+/// @param {number} $z   - A translation value of the z-axis.
+/// @example  scss - SCSS
+///  .foo{
+///         @include translate3d(100px, 100px,-200px);
+///       }
+/// @example css - CSS
+///   .foo {
+///      -webkit-transform: translate3d(100px, 100px, -200px);
+///      transform: translate3d(100px, 100px, -200px);
+///   }
+@mixin translate3d($x,$y,$z){
+  -webkit-transform:translate3d($x,$y,$z);
+  transform: translate3d($x,$y,$z);
+}
+
+
+
+
+///
+/// ---
+/// #### Syntax :
+/// ```markup
+///    matrix(<'scale-x'>,<'skew-y'>,<'skew-x'>,<'scale-y'>,<'translate-x'>,<'translate-y'>)
+/// ```
+/// @param {number} $scale-x     [1] -
+/// @param {number} $skew-y      [0] -
+/// @param {number} $skew-x      [0] -
+/// @param {number} $scale-y     [1] -
+/// @param {number} $translate-x [0] -
+/// @param {number} $translate-y [0] -
+/// @example  scss - SCSS
+///  .foo{
+///          @include matrix(1,0,0.7,0.8,34,90);
+///       }
+/// @example css - CSS
+///   .foo {
+///        -webkit-transform: matrix(1, 0, 0.7, 0.8, 34, 90);
+///        -ms-transform: matrix(1, 0, 0.7, 0.8, 34, 90);
+///        transform: matrix(1, 0, 0.7, 0.8, 34, 90);
+///   }
+@mixin matrix($scale-x:1,$skew-y:0,$skew-x:0,$scale-y:1,$translate-x:0,$translate-y:0 ){
+    -webkit-transform: matrix($scale-x,$skew-y,$skew-x,$scale-y,$translate-x,$translate-y);
+        -ms-transform: matrix($scale-x,$skew-y,$skew-x,$scale-y,$translate-x,$translate-y);
+            transform: matrix($scale-x,$skew-y,$skew-x,$scale-y,$translate-x,$translate-y);
+}
+
+//TODO matrix3d
+
+
+
+@mixin transition($argument...){
+     @include prefix(transition, $argument, webkit );
+}

@@ -1,0 +1,68 @@
+
+$base-point:0.75 !default ;
+//*-----------------------------------------
+//* calc-percent function
+//*-----------------------------------------
+@function cp($target, $container) {
+    @return ($target / $container) * 100%;
+    //EX: width: cp(650px, 1000px);
+}
+
+//  to px
+@function px($value) {
+    $base-size: strip($base-size);
+    @if unit($value) == 'em' or unit($value) == 'rem' {
+        $value: strip($value);
+        @return ($value * $base-size) * 1px;
+    }
+    @else if unit($value) == '%' {
+        $value: strip($value);
+        @return round(($value * $base-size) / 100 * 1px);
+    }
+    @else if unit($value) == 'pt' {
+        $value: strip($value);
+         @return round(($value / $base-point) * 1px);
+    }
+    @else {
+        @warn 'not valid value';
+        @return null;
+    }
+}
+// to em
+@function em($value) {
+  @if  unit($value)  != 'px'{
+       $value : px($value);
+    }
+    $value: strip($value);
+    $base-size: strip($base-size);
+    @return ($value / $base-size) * 1em;
+}
+
+//  to rem
+@function rem($value) {
+    @if  unit($value)  != 'px'{
+       $value : px($value);
+    }
+    $value: strip($value);
+    $base-size: strip($base-size);
+    @return ($value / $base-size) * 1rem;
+}
+
+//  to percent
+@function percent($value) {
+   @if  unit($value)  != 'px'{
+       $value : px($value);
+    }
+    $value: strip($value);
+    $base-size: strip($base-size);
+    @return ($value / $base-size) * 100%;
+}
+
+// to point
+@function point($value) {
+  @if  unit($value)  != 'px'{
+       $value : px($value);
+    }
+    $value: strip($value);
+    @return round($value * $base-point) * 1pt;
+}

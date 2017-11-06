@@ -1,0 +1,6 @@
+
+@function attributes($attributes,$i){
+    $attribute: if(length($attributes)<$i,nth($attributes,length($attributes)), nth($attributes,$i));
+    @return #{$attribute};
+
+}

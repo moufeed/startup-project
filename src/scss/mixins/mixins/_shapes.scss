@@ -1,0 +1,31 @@
+$triangle-dir: ( top:bottom left right, bottom:top left right, right:left top bottom, left:right top bottom, bottomright:right top left, bottomleft:left top right, topright:right left bottom, topleft:left right bottom);
+/// shorthand to make cool css triangle
+/// #### Syntax :
+/// ```markup
+///   triangle(<direction>,<length>,<color>);
+/// ```
+/// @param {string} $direction  <small> Defines a direction of Triangle</small>
+/// @param {number} $length     <small> Defines a size of Triangle</small>
+/// @param {color}  $color      <small> Defines a color of Triangle</small>
+/// @example  scss - SCSS
+///  .foo{
+///      @include triangle(topleft,15px,#000);
+///  }
+/// @example css - CSS
+///  .foo {
+///        width: 0;
+///        height: 0;
+///        border-left: 15px solid #000;
+///        border-right: 15px solid transparent;
+///        border-bottom: 15px solid transparent;
+///  }
+@mixin triangle($direction:false,$length:0,$color:0){
+    height: 0;
+    width: 0;
+    @if $direction {
+	$direction : get-key($triangle-dir,$direction);
+	border-#{nth($direction,1)}:$length solid $color;
+	border-#{nth($direction,2)}:$length solid transparent;
+    border-#{nth($direction,3)}:$length solid transparent;
+    }
+}

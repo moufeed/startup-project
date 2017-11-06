@@ -1,0 +1,45 @@
+
+
+
+//  Specify an image to be used instead of the normal border around an element.
+// ---
+// #### Syntax :
+// ```markup
+//   borderimg(  width[number|%] ,source, slice[number|%|fill] , outset[length|number] ,[stretch|repeat|round]  );
+// ```
+
+// @example  scss - SCSS
+// .foo{
+//      @include placeholder{
+//            colore:red;
+//            font-size: 14px;
+//}
+//     }
+// @example css - CSS
+// .foo {
+//
+//      }
+
+@mixin placeholder{
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+
+
+
+
+
+
+

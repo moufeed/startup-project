@@ -1,0 +1,417 @@
+////
+/// @group Flexbox
+/// @since 1.0.0
+////
+
+
+//------------------------------------------------------------
+//The Container
+//------------------------------------------------------------
+/// This defines a flex container; inline or block depending on the given value. It enables a flex context for all its direct children.
+/// #### Syntax :
+/// ```markup
+///   display-flex(inline?);
+/// ```
+/// @param {string} $inline [false] - [optional] inline: <small>The element behaves like an inline element</small>
+/// @example scss - scss
+///  .foo{
+///        @include display-flex;
+///      }
+/// @example css - CSS
+///  .foo {
+///      display: -webkit-box;
+///      display: -webkit-flex;
+///      display: -moz-flex;
+///      display: -ms-flexbox;
+///      display: flex;
+///  }
+@mixin display-flex($inline:false){
+  @if $inline{
+      @if $autoprefixer{
+        display: -webkit-inline-box;
+	    display: -webkit-inline-flex;
+	    display: -moz-inline-flex;
+	    display: -ms-inline-flexbox;
+      }
+	display: inline-flex;
+  }@else{
+       @if $autoprefixer{
+         display: -webkit-box;
+	     display: -webkit-flex;
+	     display: -moz-flex;
+	     display: -ms-flexbox;
+       }
+	display: flex;
+  }
+}
+/// The flex-direction  specifies how flex items are placed in the flex container defining the main axis and
+/// the direction (normal or reversed).
+/// #### Syntax :
+/// ```markup
+///   flex-direction(row | row-reverse | column | column-reverse);
+/// ```
+/// @param {number} $direction [row] -  pecifies the direction of the flexible items
+/// @example scss - scss
+///  .foo{
+///        @include flex-direction();
+///      }
+/// @example css - CSS
+///  .foo {
+///      -webkit-box-orient: horizontal;
+///      -webkit-box-direction: normal;
+///      -webkit-flex-direction: row;
+///      -ms-flex-direction: row;
+///      flex-direction: row;
+///  }
+@mixin flex-direction($direction: row) {
+    @if $autoprefixer{
+    @if $direction =='row' or $direction =='row-reverse' {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction:#{if($direction == 'row','normal','reverse')};
+    }
+    @if $direction =='column' or $direction =='column-reverse' {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction:#{if($direction == 'row','normal','reverse')};
+    }
+    -webkit-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    }
+    flex-direction: $direction;
+}
+/// flex-wrap property specifies whether flex items are forced into a single line or can be wrapped onto multiple lines.
+/// #### Syntax :
+/// ```markup
+///   flex-wrap(nowrap | wrap | wrap-reverse);
+/// ```
+/// @param {string} $value [wrap] -  specifies whether the flexible items should wrap or not.
+/// @example scss - scss
+///  .foo{
+///        @include flex-wrap(wrap-reverse);
+///      }
+/// @example css - CSS
+///  .foo {
+///      -webkit-flex-wrap: wrap-reverse;
+///      -ms-flex-wrap: wrap-reverse;
+///      flex-wrap: wrap-reverse;
+///  }
+@mixin flex-wrap($value: wrap) {
+    @if $autoprefixer{
+     -ms-flex-wrap: $value;
+    }
+	 -webkit-flex-wrap: $value;
+     flex-wrap: $value ;
+}
+/// The flex-flow CSS property is a shorthand property for flex-direction and flex-wrap individual properties.
+/// #### Syntax :
+/// ```markup
+///   flex-flow( <'flex-direction'> || <'flex-wrap'>);
+/// ```
+/// @param {string} $values [row nowrap] - set the 'flex-direction' and 'flex-wrap' properties
+/// @example scss - scss
+///  .foo{
+///        @include flex-flow(row-reverse wrap);
+///      }
+/// @example css - CSS
+///  .foo {
+///      -webkit-flex-flow: row-reverse wrap;
+///      -ms-flex-flow: row-reverse wrap;
+///      flex-flow: row-reverse wrap;
+///  }
+@mixin flex-flow($values: row nowrap) {
+    @if $autoprefixer{
+	-webkit-flex-flow: $values;
+	-ms-flex-flow: $values;
+    }
+	flex-flow: $values;
+}
+/// justify-content defines how the browser distributes space between and around flex items along the main-axis of their container.
+/// #### Syntax :
+/// ```markup
+///   justify-content(flex-start | flex-end | center | space-between | space-around );
+/// ```
+/// @param {string} $justify [ flex-start] -<small>accepts 5 different values[flex-start | flex-end | center | space-between | space-around ] </small>
+/// @example scss - scss
+///  .foo{
+///        @include  justify-content(space-between);
+///      }
+/// @example css - CSS
+///  .foo {
+///         -webkit-box-pack: justify;
+///         -webkit-justify-content: space-between;
+///         -ms-flex-pack: justify;
+///         justify-content: space-between;
+///  }
+ @mixin justify-content($justify: flex-start) {
+  @if $autoprefixer{
+      $flex-prefix : get-key($flex-prefixes,$justify);
+     -webkit-box-pack: if($flex-prefix,$flex-prefix,$justify);
+     -webkit-justify-content:$justify;
+     -ms-flex-pack: if($flex-prefix,$flex-prefix,$justify);
+  }
+  justify-content: $justify;
+}
+
+/// align-items aligns flex items of the current flex line the same way as justify-content but in the perpendicular direction. of their container.
+/// #### Syntax :
+/// ```markup
+///    align-items(flex-start | flex-end | center | baseline | stretch);
+/// ```
+/// @param {string} $align [stretch] -<small>accepts 5 different values[flex-start | flex-end | center | baseline | stretch] </small>
+/// @example scss - scss
+///  .foo{
+///        @include align-items(flex-end);
+///      }
+/// @example css - CSS
+///  .foo {
+///           -webkit-box-align: end;
+///           -webkit-align-items: flex-end;
+///           -ms-flex-align: end;
+///           align-items: flex-end;
+///  }
+ @mixin align-items($align:stretch){
+  @if $autoprefixer{ // see settings file
+      $flex-prefix : get-key($flex-prefixes,$align);
+      -webkit-box-align: if($flex-prefix,$flex-prefix,$align);
+      -webkit-align-items: $align;
+      -ms-flex-align: if($flex-prefix,$flex-prefix,$align);
+  }
+      align-items: $align;
+}
+/// The CSS align-content property aligns a flex container's lines within the flex container when there is extra space on the cross-axis.
+/// #### Syntax :
+/// ```markup
+///   align-content(flex-start | flex-end | center | space-between | space-around | stretch);
+/// ```
+/// @param {string} $align [stretch] -<small>accepts 6 different values[flex-start | flex-end | center | space-between | space-around | stretch] </small>
+/// @example scss - scss
+///  .foo{
+///        @include align-content(flex-end);
+///      }
+/// @example css - CSS
+///  .foo {
+///        -webkit-align-content: flex-end;
+///        -ms-flex-line-pack: end;
+///        align-content: flex-end;
+///  }
+ @mixin align-content($align:stretch){
+  @if $autoprefixer{ // see settings file
+      $flex-prefix : get-key($flex-prefixes,$align);
+     -webkit-align-content: $align;
+     -ms-flex-line-pack: if($flex-prefix,$flex-prefix,$align);
+  }
+    align-content: $align;
+}
+
+///
+/// #### Syntax :
+/// ```markup
+///   makeflex(<'display-flex'>[flex | inline],<'flex-direction'>?,<'justify-content'>?,<'align-items'>?);
+/// ```
+/// @param {string} $display-flex    [flex]       -<small>Defines the display-flex of the flex item </small>
+/// @param {string} $flex-direction  [row]        -<small>Defines the flex-direction of the flex item</small>
+/// @param {string} $justify-content [flex-start] -<small>Defines the justify-content of the flex item</small>
+/// @param {string} $align-items     [stretch]    -<small>Defines the align-items of the flex item</small>
+/// @example scss - scss
+///  .foo{
+///       @include makeflex(flex,row,center,flex-start);
+///      }
+/// @example css - CSS
+///     // while $autoprefixer: true;
+///  .foo {
+///      display: -webkit-box;
+///      display: -webkit-flex;
+///      display: -moz-flex;
+///      display: -ms-flexbox;
+///      display: flex;
+///      -webkit-box-orient: horizontal;
+///      -webkit-box-direction: normal;
+///      -webkit-flex-direction: row;
+///      -ms-flex-direction: row;
+///      flex-direction: row;
+///      -webkit-box-pack: center;
+///      -webkit-justify-content: center;
+///      -ms-flex-pack: center;
+///      justify-content: center;
+///      -webkit-box-align: start;
+///      -webkit-align-items: flex-start;
+///      -ms-flex-align: start;
+///      align-items: flex-start;
+///  }
+///   // while $autoprefixer: false;
+///   .foo {
+///     display: flex;
+///     flex-direction: row;
+///     justify-content: center;
+///     align-items: flex-start;
+///   }
+@mixin makeflex($display-flex,$flex-direction:false,$justify-content:false,$align-items:false){
+   @include display-flex(if($display-flex == 'inline',inline,null));
+   @if $flex-direction{
+     @include flex-direction($flex-direction);
+   }
+   @if $justify-content{
+     @include justify-content($justify-content);
+   }
+   @if $align-items{
+     @include align-items($align-items);
+   }
+}
+//------------------------------------------------------------------
+//  The Children
+//------------------------------------------------------------------
+/// the order property controls the order in which they appear in the flex container , by assigning them to ordinal groups.
+///
+/// #### Syntax :
+/// ```markup
+///   order(<integer>);
+/// ```
+/// @param {number} $value [0] -   Specifies the order for the flexible item
+/// @example scss - scss
+///  .foo{
+///        @include order(2);
+///      }
+/// @example css - CSS
+///  .foo {
+///    -webkit-box-ordinal-group: 3;
+///    -webkit-order: 2;
+///    -ms-flex-order: 2;
+///    order: 2;
+///  }
+@mixin order($value: 0) {
+    @if $autoprefixer{
+	-webkit-box-ordinal-group: $value + 1;
+    -webkit-order:$value;
+    -ms-flex-order:$value;
+    }
+    order:$value;
+}
+/// flex-grow CSS property specifies the flex grow factor of a flex item. It specifies what amount of space inside the flex container the item should take up.
+/// #### Syntax :
+/// ```markup
+///   flex-grow(<integer>);
+/// ```
+/// @param {number} $value [0] -<small>how much the item will grow relative to the rest of the flexible items inside the same container.  </small>
+/// @example scss - scss
+///  .foo{
+///        @include flex-grow(2);
+///      }
+/// @example css - CSS
+///  .foo {
+///      -webkit-box-flex: 2;
+///      -webkit-flex-grow: 2;
+///      -ms-flex-positive: 2;
+///      flex-grow: 2;
+///  }
+@mixin flex-grow($int: 0) {
+    @if $autoprefixer{
+	-webkit-box-flex: $int;
+	-webkit-flex-grow: $int;
+	-ms-flex-positive: $int;
+    }
+	flex-grow: $int;
+}
+///  flex-shrink CSS property specifies the flex shrink factor of a flex item.
+/// #### Syntax :
+/// ```markup
+///   flex-shrink(<integer>);
+/// ```
+/// @param {number} $value [0] -<small> specifies how the item will shrink relative to the rest of the flexible items inside the same container.</small>
+/// @example scss - scss
+///  .foo{
+///        @include flex-shrink(2);
+///      }
+/// @example css - CSS
+///  .foo {
+///        -webkit-flex-shrink: 2;
+///            -ms-flex-negative: 2;
+///                flex-shrink: 2;
+///  }
+@mixin flex-shrink($int: 1) {
+    @if $autoprefixer{
+	-webkit-flex-shrink: $int;
+	-ms-flex-negative: $int;
+    }
+	flex-shrink: $int;
+}
+///   flex-basis CSS property specifies the flex basis which is the initial main size of a flex item. This property determines the size of the content-box unless specified otherwise using box-sizing.
+/// #### Syntax :
+/// ```markup
+///   flex-basis(content | <'width'>);
+/// ```
+/// @param {number} $basis [auto] -<small>specifies the initial length of a flexible item.</small>
+/// @example scss - scss
+///  .foo{
+///        @includeflex-basis(10em);
+///      }
+/// @example css - CSS
+///  .foo {
+///      -webkit-flex-basis: 10em;
+///      -ms-flex-preferred-size: 10em;
+///      flex-basis: 10em;
+///  }
+@mixin flex-basis($basis: auto) {
+    @if $autoprefixer{
+	-webkit-flex-basis: $basis;
+	-ms-flex-preferred-size: $basis;
+    }
+	flex-basis: $basis;
+}
+//----------------------------------------------------------------------
+/// flex is a `shorthand`  specifying the ability of a flex item to alter its dimensions to fill available space. Flex items can be stretched to use available space proportional to their flex grow factor or their flex shrink factor to prevent overflow.
+/// #### Syntax :
+/// ```markup
+///   flex(none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]);
+/// ```
+/// @param {number | string} $flex-grow   [0]    - <small>Defines the flex-grow of the flex item </small>
+/// @param {number} $flex-shrink [null] - <small>Defines the flex-shrink of the flex item </small>
+/// @param {number} $flex-basis  [null] - <small>Defines the flex-basis of the flex item.</small>
+/// @example scss - scss
+///  .foo{
+///        @include flex(2,2,10%);
+///      }
+/// @example css - CSS
+///  .foo {
+///       -webkit-box-flex: 2;
+///       -webkit-flex: 2 2 10%;
+///       -ms-flex: 2 2 10%;
+///       flex: 2 2 10%;
+///       }
+ @mixin flex($flex-grow :0,$flex-shrink:null,$flex-basis:null){
+  $flex-prefix : if($flex-grow == 'none', 0 , $flex-grow);
+  $flex-prefix : if($flex-grow == 'auto', 1 , $flex-prefix);
+  @if $autoprefixer{
+     -webkit-box-flex: $flex-prefix;
+     -webkit-flex: $flex-grow $flex-shrink $flex-basis;
+     -ms-flex: $flex-grow $flex-shrink $flex-basis;
+  }
+     flex: $flex-grow $flex-shrink $flex-basis;
+}
+//----------------------------------------------------------------------
+
+/// The `align-self`  aligns flex items of the current flex line overriding the align-items value. If any of the flex item's cross-axis margin is set to auto, then align-self is ignored.
+/// #### Syntax :
+/// ```markup
+///    align-self(auto | flex-start | flex-end | center | baseline | stretch);
+/// ```
+/// @param {string} $align [auto] -<small>accepts 6 different values[auto | flex-start | flex-end | center | baseline | stretch] </small>
+/// @example scss - scss
+///  .foo{
+///         @include align-self(flex-end);
+///      }
+/// @example css - CSS
+///  .foo {
+///       -webkit-align-self: flex-end;
+///       -ms-flex-item-align: end;
+///       align-self: flex-end;
+///  }
+ @mixin align-self($align:auto){
+  @if $autoprefixer{
+     $flex-prefix : get-key($flex-prefixes,$align);
+     -webkit-align-self :$align;
+     -ms-flex-item-align : if($flex-prefix,$flex-prefix,$align);
+  }
+     align-self :$align;
+}
+
+
+

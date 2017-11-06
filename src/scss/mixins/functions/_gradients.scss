@@ -1,0 +1,120 @@
+////
+/// @group Gradient Functions
+/// @since 1.0.0
+////
+
+
+/// @access private
+/// Returns a list of colors with comma separator
+/// #### Syntax :
+/// ```markup
+///   colors( color-stop1 color-stop2 ... );
+/// ```
+/// @param {color} $list   -   list of different colors
+/// @example  scss - SCSS
+///      colors(#f00 5px rgba(00,255,00,.5) 15% #00f 50em);
+///  Returns:
+///      #f00 5px, rgba(0, 255, 0, 0.5) 15%, #00f 50em
+///
+@function colors($list) {
+    $color-list: ();
+    $colors: ();
+    $number: ();
+    @for $i from 1 through length( $list) {
+        @if type-of(nth($list, $i))==number {
+            $number: append($number, if(unitless(nth($list, $i)), #{"#{nth($list, $i)}%"},nth($list, $i)));
+
+        }
+        @if type-of(nth($list, $i))==color {
+            $colors: append($colors, nth($list, $i), comma);
+        }
+    }
+    @if (length($number)==0) {
+        $color-list: $colors;
+    }
+    @else if length($number) < length($colors) {
+        @warn " #{length($colors) - length($number)} color-stop  messed up//Syntax: <color> [ <percentage> | <length> ]?";
+        $color-list: $colors
+    }
+    @else {
+        $color-list: zip($colors, $number);
+    }
+    @return $color-list;
+}
+
+/// @access private
+/// Reverse Direction Functions
+/// #### Syntax :
+/// ```markup
+///   invertdir(direction);
+/// ```
+/// @param {string} $direction   -  set direction to get reverse direction
+/// @example  scss - SCSS
+///      invertdir(left)
+///  Returns:
+///             right
+///
+@function invertdir($direction) {
+    $directions: ( top: bottom, bottom: top, right: left, left: right);
+    @if map-has-key($directions, $direction) {
+        $direction: map-get($directions, $direction);
+         @return $direction;
+    }
+    @warn "Unknown `#{$direction}` in $directions.";
+    @return null;
+}
+
+/// @access private
+/// Gardient Direction Function Standard syntax
+/// #### Syntax :
+/// ```markup
+///   todir(direction);
+/// ```
+/// @param {string | angle} $direction   -  set direction to get reverse direction
+/// @example  scss - SCSS
+///      todir(left top)
+///  Returns:
+///            to right bottom
+///
+
+@function todir($direction) {
+    @if type-of($direction) == 'number' and length($direction) == 1 {
+       @if unit($direction) != deg {
+         @warn 'set an angle for gradient. #{$direction} not allowed ';
+          @return null;
+       }@else{
+        @return $direction;
+       }
+    }
+    @else{
+      @if length($direction) > 1 {
+        $direction: to #{invertdir(nth($direction,1))} #{invertdir(nth($direction,2))};
+        @return $direction;
+      }
+      @else{
+        $direction :  to #{invertdir($direction)} ;
+        @return $direction;
+      }
+    }
+}
+/// @access private
+/// Returns a color-stop  with comma separator
+/// #### Syntax :
+/// ```markup
+///   colorStop(<color> [ <percentage> | <length> ]?);
+/// ```
+/// @param {color-stop} $colorStop   -   color and length or percentage
+/// @example  scss - SCSS
+///      colorStop(#000 15%)
+///  Returns:
+///      #000, 15%
+///
+@function  colorStop($colorStop){
+  @if length($colorStop) != 2 {
+     @warn ' [#{$colorStop}] //color length is missed// Syntax: <color> [ <percentage> | <length> ]?';
+      @return null;
+  } @else {
+      $colorStop :nth($colorStop,1),nth($colorStop,2) ;
+      @return $colorStop;
+  }
+}

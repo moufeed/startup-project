@@ -1,0 +1,266 @@
+////
+/// @group maps
+/// @since 1.0.0
+////
+
+/// Web social colors
+/// @type Map
+/// @example css    [ how to using ]
+///   .foo{
+///         background: get-key($social-colors,instagram);
+///       }
+///   .foo{
+///         background: #517fa4;
+///       }
+/// @prop {Color} twitter     [#00aced]
+/// @prop {Color} facebook    [#3b5998]
+/// @prop {Color} google-plus [#dd4b39]
+/// @prop {Color} pinterest   [#cb2027]
+/// @prop {Color} linkedin    [#007bb6]
+/// @prop {Color} youtube     [#bb0000]
+/// @prop {Color} vimeo       [#aad450]
+/// @prop {Color} tumblr      [#32506d]
+/// @prop {Color} instagram   [#517fa4]
+/// @prop {Color} flickr      [#ff0084]
+/// @prop {Color} dribbble    [#ea4c89]
+/// @prop {Color} quora       [#a82400]
+/// @prop {Color} foursquare  [#0072b1]
+/// @prop {Color} forrst      [#5B9A68]
+/// @prop {Color} vk          [#45668e]
+/// @prop {Color} wordpress   [#21759b]
+/// @prop {Color} stumbleupon [#EB4823]
+/// @prop {Color} yahoo       [#7B0099]
+/// @prop {Color} blogger     [#fb8f3d]
+/// @prop {Color} soundcloud  [#ff3a00]
+/// @prop {Color} skype       [#00B8ED]
+/// @prop {Color} deviantart  [#4E6252]
+/// @prop {Color} codepen     [#212121]
+/// @prop {Color} beehance    [#008cff]
+/// @prop {Color} aim         [#FCD20B]
+/// @prop {Color} zerply      [#9dcc7a]
+
+$social-colors:(
+twitter:#00aced,
+facebook:#3b5998,
+google-plus:#dd4b39,
+pinterest:#cb2027,
+linkedin:#007bb6,
+youtube:#bb0000,
+vimeo:#aad450,
+tumblr:#32506d,
+instagram:#517fa4,
+flickr:#ff0084,
+dribbble:#ea4c89,
+quora:#a82400,
+foursquare:#0072b1,
+forrst:#5B9A68,
+vk:#45668e,
+wordpress:#21759b,
+stumbleupon:#EB4823,
+yahoo:#7B0099,
+blogger:#fb8f3d,
+soundcloud:#ff3a00,
+skype:#00B8ED,
+deviantart:#4E6252,
+codepen:#212121,
+beehance:#008cff,
+aim:#FCD20B,
+zerply:#9dcc7a,
+rss :#FFA500
+);
+
+
+
+
+
+//
+//500px :#,
+//adn:#,
+//amazon:#,
+//android:#,
+//angellist:#,
+//apple:#,
+//behance:#,
+//behance-square:#,
+//bitbucket:#,
+//bitbucket-square:#,
+//bitcoin:#,
+//black-tie:#,
+//bluetooth:#,
+//bluetooth-b:#,
+//btc:#,
+//buysellads:#,
+//cc-amex:#,
+//cc-diners-club:#,
+//cc-discover:#,
+//cc-jcb:#,
+//cc-mastercard:#,
+//cc-paypal:#,
+//cc-stripe:#,
+//cc-visa:#,
+//chrome:#,
+//codepen:#,
+//codiepie:#,
+//connectdevelop:#,
+//contao:#,
+//credit-card-alt:#,
+//css3:#,
+//dashcube:#,
+//delicious:#,
+//deviantart:#,
+//digg:#,
+//dribbble:#,
+//dropbox:#,
+//drupal:#,
+//edge:#,
+//empire:#,
+//expeditedssl:#,
+//facebook:#,
+//facebook-f:#,
+//facebook-official:#,
+//facebook-square:#,
+//firefox:#,
+//flickr:#,
+//fonticons:#,
+//fort-awesome:#,
+//forumbee:#,
+//foursquare:#,
+//ge:#,
+//get-pocket:#,
+//gg:#,
+//gg-circle:#,
+//git:#,
+//git-square:#,
+//github:#,
+//github-alt:#,
+//github-square:#,
+//gittip:#,
+//google:#,
+//google-plus:#,
+//google-plus-square:#,
+//google-wallet:#,
+//gratipay:#,
+//hacker-news:#,
+//houzz:#,
+//html5:#,
+//instagram:#,
+//internet-explorer:#,
+//ioxhost:#,
+//joomla:#,
+//jsfiddle:#,
+//lastfm:#,
+//lastfm-square:#,
+//leanpub:#,
+//linkedin:#,
+//linkedin-square:#,
+//linux:#,
+//maxcdn:#,
+//meanpath:#,
+//medium:#,
+//mixcloud:#,
+//modx:#,
+//odnoklassniki:#,
+//odnoklassniki-square:#,
+//opencart:#,
+//openid:#,
+//opera:#,
+//optin-monster:#,
+//pagelines:#,
+//paypal:#,
+//pied-piper:#,
+//pied-piper-alt:#,
+//pinterest:#,
+//pinterest-p:#,
+//pinterest-square:#,
+//product-hunt:#,
+//qq:#,
+//ra:#,
+//rebel:#,
+//reddit:#,
+//reddit-alien:#,
+//reddit-square:#,
+//renren:#,
+//safari:#,
+//scribd:#,
+//sellsy:#,
+//share-alt:#,
+//share-alt-square:#,
+//shirtsinbulk:#,
+//simplybuilt:#,
+//skyatlas:#,
+//skype:#,
+//slack:#,
+//slideshare:#,
+//soundcloud:#,
+//spotify:#,
+//stack-exchange:#,
+//stack-overflow:#,
+//steam:#,
+//steam-square:#,
+//stumbleupon:#,
+//stumbleupon-circle:#,
+//tencent-weibo:#,
+//trello:#,
+//tripadvisor:#,
+//tumblr:#,
+//tumblr-square:#,
+//twitch:#,
+//twitter:#,
+//twitter-square:#,
+//usb:#,
+//viacoin:#,
+//vimeo:#,
+//vimeo-square:#,
+//vine:#,
+//vk:#,
+//wechat:#,
+//weibo:#,
+//weixin:#,
+//whatsapp:#,
+//wikipedia-w:#,
+//windows:#,
+//wordpress:#,
+//xing:#,
+//xing-square:#,
+//y-combinator:#,
+//y-combinator-square:#,
+//yahoo:#,
+//yc:#,
+//yc-square:#,
+//yelp:#,
+//youtube:#,
+//youtube-play:#,
+//youtube-square:#
+
+/// boxlayout properties list (shorthand) for boxlayout mixin
+/// @type Map
+/// @prop {string} p  <small> shorthand for padding property        </small>
+/// @prop {string} pt <small> shorthand for padding-top property    </small>
+/// @prop {string} pl <small> shorthand for padding-left property   </small>
+/// @prop {string} pr <small> shorthand for padding-right property  </small>
+/// @prop {string} pb <small> shorthand for padding-bottom property </small>
+/// @prop {string} m  <small> shorthand for margin property         </small>
+/// @prop {string} mt <small> shorthand for margin-top property     </small>
+/// @prop {string} ml <small> shorthand for margin-left property    </small>
+/// @prop {string} mr <small> shorthand for margin-right property   </small>
+/// @prop {string} mb <small> shorthand for margin-bottom property  </small>
+/// @prop {string} b  <small> shorthand for border property         </small>
+/// @prop {string} bt <small> shorthand for border-top property     </small>
+/// @prop {string} bl <small> shorthand for border-left property    </small>
+/// @prop {string} br <small> shorthand for border-right property   </small>
+/// @prop {string} bb <small> shorthand for border-botto property   </small>
+$properties :(
+p :padding,pt:padding-top,pl:padding-left,pr:padding-right,pb:padding-bottom,m: margin,mt:margin-top,ml:margin-left,mr:margin-right,mb:margin-bottom,b: border,bt:border-top,bl:border-left,br:border-right,bb:border-bottom
+);
+
+// base units
+// @type units
+$units: 'px' 'cm' 'mm' '%' 'ch' 'pica' 'in' 'em' 'rem' 'pt' 'pc' 'ex' 'vw' 'vh' 'vmin' 'vmax' ;
+
+/// Web Font Formats
+/// @type map
+$extensions: ( eot: embedded-opentype, woff: woff, woff2:woff2 , ttf: truetype, otf: otf, svg: svg);
+
+/// Flexbox properties prefixes
+/// @type map
+$flex-prefixes : (flex-start:start,flex-end:end,space-between:justify,space-around:distribute);

@@ -1,0 +1,23 @@
+
+//*-----------------------------------------
+//* Media Queries Function
+//*-----------------------------------------
+
+@function media($media){
+  $screen:();
+  $sizes:
+        (320 $phone)
+        (480 $stab)
+        (768 $tab)
+        (960 $desktop)
+        (1024 $labtop)
+        (1366 $larg_screen)
+        (1920 $full_hd) ;
+
+   @each $value in $sizes {
+     @if nth($value , 1) == $media{
+       $screen : nth($value , 2) ;
+     }
+   }
+@return $screen;
+}

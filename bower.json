@@ -1,0 +1,22 @@
+{
+  "name": "projectname",
+  "description": "project description",
+  "main": "index.js",
+  "authors": [
+    "moufeed jobakji <m.jobakji@hotmail.com> (moufeed.me)"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^4.0.0-beta"
+  }
+}

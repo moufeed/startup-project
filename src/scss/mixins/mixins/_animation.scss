@@ -1,0 +1,227 @@
+////
+/// @group animation
+/// @since 1.0.0
+////
+
+
+
+///  control the intermediate steps in a CSS animation sequence by establishing keyframes (or waypoints) along the animation
+/// ---
+/// #### Syntax :
+/// ```markup
+///     keyframe(<animation-name>){ [ [ from | to | <percentage> ] [, from | to | <percentage> ]* block ]* }
+/// ```
+/// @param {string} $animation set  name of the keyframe
+/// @param {string}  content from - A starting offset of 0%.
+/// @param {string}  content to - An ending offset of 100%.
+/// ---
+/// @example  scss - SCSS
+///   @include keyframe(opacity) {
+///      0% { opacity: 1; }
+///     100% { opacity: 0; }
+///   }
+/// @example css - CSS
+///   @-webkit-keyframes opacity {
+///     0% {opacity: 1;}
+///     100% {opacity: 0;}
+///   }
+///   @keyframes opacity {
+///     0% {opacity: 1;}
+///     100% {opacity: 0;}
+///   }
+@mixin keyframe($animation) {
+    @-webkit-keyframes #{$animation} {
+    @content;
+  }
+    @keyframes #{$animation} {
+    @content;
+  }
+}
+
+///  Specify a name for the @keyframes animation
+/// ---
+/// #### Syntax :
+/// ```markup
+///     keyname(<animation-name>#);
+/// ```
+/// @param {string} $name -  Specifies the name of the keyframe you want to bind to the selector
+/// @example  scss - SCSS
+///      .foo{
+///             @include keyname(slideTo);
+///          }
+/// @example css - CSS
+///      .foo {
+///              -webkit-animation-name: slideTo;
+///              animation-name: slideTo;
+///          }
+/// @see {mixin} keyframe
+@mixin keyname($name...){
+  -webkit-animation-name: $name;
+          animation-name: $name;
+}
+
+///  shorthand mixin for eight of the animation properties @keyframes name,duration,timing-function,delay,iteration-count, direction,fill-mode,play-state
+/// ---
+/// #### Syntax :
+/// ```markup
+///     animation(<animation-name> || <time> || <animation-iteration-count> [<options>]?);
+/// ```
+/// @param {string} $arguments - animation  properties
+/// @example  scss - SCSS
+///      .foo{
+///           @include animation(slidein 3s ease-in 1s 2 reverse both paused);
+///          }
+/// @example css - CSS
+///      .foo {
+///          -webkit-animation: slidein 3s ease-in 1s 2 reverse both paused;
+///          animation: slidein 3s ease-in 1s 2 reverse both paused;
+///          }
+@mixin animation($arguments...){
+  -webkit-animation: $arguments ;
+          animation: $arguments ;
+}
+///  specifies when the animation should start.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     delay(<time>#);
+/// ```
+/// @param {number} $time - Defines the number of seconds (s) or milliseconds (ms) to wait before the animation will star
+/// @example  scss - SCSS
+///      .foo{
+///          @include delay(2s);
+///          }
+/// @example css - CSS
+///      .foo {
+///          -webkit-animation-delay: 2s;
+///          animation-delay: 2s;
+///          }
+@mixin delay($time...){
+  -webkit-animation-delay:$time ;
+          animation-delay:$time;
+}
+///   defines whether an animation should play in reverse direction or in alternate cycles.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     direction(<animation-direction>#);
+/// ```
+/// @param {string} $direction -  normal | reverse | alternate | alternate-reverse
+/// @example  scss - SCSS
+///      .foo{
+///           @include direction(normal, reverse);
+///          }
+/// @example css - CSS
+///      .foo {
+///         -webkit-animation-direction: normal, reverse;
+///                 animation-direction: normal, reverse;
+///          }
+@mixin direction($direction...){
+    -webkit-animation-direction: $direction;
+            animation-direction: $direction;
+}
+///  specifies the length of time that an animation should take to complete one cycle.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     duration(<time>#);
+/// ```
+/// @param {number} $time -   Specifies the length an animation takes to finish
+/// @example  scss - SCSS
+///      .foo{
+///           @include duration(1s, 15s);
+///          }
+/// @example css - CSS
+///      .foo {
+///           -webkit-animation-duration: 1s, 15s;
+///            animation-duration: 1s, 15s;
+///          }
+@mixin duration($time...){
+    	 -webkit-animation-duration: $time;
+	             animation-duration: $time;
+}
+
+///  specifies how a CSS animation should apply styles to its target before and after it is executing.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     fillmode(<animation-fill-mode>#);
+/// ```
+/// @param {keyword} $mode -   style for the element when the animation is not playing
+/// @example  scss - SCSS
+///      .foo{
+///            @include fillmode(forwards);
+///          }
+/// @example css - CSS
+///      .foo {
+///             -webkit-animation-fill-mode: forwards;
+///             animation-fill-mode: forwards;
+///          }
+ @mixin fillmode($mode...){
+  	  -webkit-animation-fill-mode: $mode;
+	          animation-fill-mode: $mode;
+}
+
+
+///   defines the number of times an animation cycle should be played before stopping.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     iteration(<animation-iteration-count>#);
+/// ```
+/// @param {number} $count -  The number of times the animation should repeat
+/// @example  scss - SCSS
+///      .foo{
+///             @include iteration(infinite);
+///          }
+/// @example css - CSS
+///      .foo {
+///            -webkit-animation-iteration-count: infinite;
+///             animation-iteration-count: infinite;
+///          }
+@mixin iteration($count...){
+    -webkit-animation-iteration-count: $count;
+            animation-iteration-count: $count;
+}
+
+///  The playstate mixin specifies whether the animation is running or paused.
+/// ---
+/// #### Syntax :
+/// ```markup
+///     playstate(<animation-play-state>#);
+/// ```
+/// @param {keyword} $state -   set the state of animation is running or paused
+/// @example  scss - SCSS
+///      .foo{
+///             @include playstate(paused);
+///          }
+/// @example css - CSS
+///      .foo {
+///              -webkit-animation-play-state: paused;
+///              animation-play-state: paused;
+///          }
+@mixin playstate($state...){
+   -webkit-animation-play-state: $state;
+           animation-play-state: $state;
+}
+///  The timing mixin specifies how a CSS animation should progress over the duration of each cycle
+/// ---
+/// #### Syntax :
+/// ```markup
+///     timing(<timing-function>#);
+///     timing-function = [linear|ease|ease-in|ease-out|cubic-bezier(n,n,n,n)]
+/// ```
+/// @param {string} $timingFunction -   specifies the speed curve of an animation.
+/// @example  scss - SCSS
+///      .foo{
+///             @include timing(cubic-bezier(0.1, 0.7, 1.0, 0.1));
+///          }
+/// @example css - CSS
+///      .foo {
+///             -webkit-animation-timing-function: cubic-bezier(0.1, 0.7, 1, 0.1);
+///             animation-timing-function: cubic-bezier(0.1, 0.7, 1, 0.1);
+///          }
+@mixin timing($timingFunction...){
+         -webkit-animation-timing-function: $timingFunction;
+                 animation-timing-function: $timingFunction;
+}

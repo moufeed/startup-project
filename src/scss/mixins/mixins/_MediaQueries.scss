@@ -1,0 +1,157 @@
+//*-----------------------------------------
+//* Media Queries mixin
+//*-----------------------------------------
+// sizes [320 480 768 960 1024 1366 1920 ]
+
+
+@mixin mq($media){
+   @media #{media($media)}{
+     @content;
+     }
+}
+
+
+
+//    div{
+//        @include mq(480){ width :100px;}
+//    }
+
+//div{
+//  @include media(480x728){
+//    padding: 7px;
+//  };
+//}
+
+
+$breakpoint :(
+  sx : 320 ,
+  sm : 480 ,
+  ms : 728 ,
+  ls : 1024
+);
+@function min-max($value,$index){
+   $min: str-slice($value, 0, $index - 1);
+   $max: str-slice($value, $index + 1, str-length($value));
+   @return 'screen and (min-width: #{$min}px) and (max-width: #{$max}px)';
+}
+@mixin media($number){
+  @if map-has-key($breakpoint,$number){
+    @media screen and (max-width:map-get($breakpoint,$number) + 'px'){
+      @content;
+    }
+  }@else{
+    $number: inspect($number);
+    $index: str-index($number, 'x');
+    @if $index {
+        @media #{min-max($number,$index)}{
+            @content;
+        }
+    }
+    @else {
+        @media screen and (max-width: $number + 'px') {
+            @content;
+        }
+    }
+  }
+}
+//div{
+//  padding: 0;
+//  @include media(sx){
+//    padding: 7px;
+//  };
+//  @include media(480x320){
+//    padding: 12px;
+//  }
+//}
+ 
+ 
+
+//$breakpoint :(
+//  sx : 320 ,
+//  sm : 480 ,
+//  ms : 728 ,
+//  ls : 1024
+//);
+//@mixin media($number){
+//  @each $point ,$value in $breakpoint{
+//    @if $number >= $value {
+//      @media screen and (max-width :#{$value+'px'}){
+//         @content;
+//        
+//      }
+//    }
+//  }
+//}
+//
+//
+//div{
+//  @include media(728){
+//    position: relative;
+//  };
+//}
+
+
+
+
+
+// Media query helper for declaring media queries by width, and, optionally, ratio.
+// @access public
+// @param {Length} $width - Max-width
+// @param {Number | False} $ratio [false] - Min device pixel ratio
+// @example scss - Usage
+//   .foo {
+//     @include mquery(350px, 2) {
+//       width: 100%;
+//     }
+//   }
+@mixin mquery($width, $ratio: false) {
+    @if $ratio {
+        @media
+            only screen and (max-width: $width) and  (min--moz-device-pixel-ratio: $ratio),
+            only screen and (max-width: $width) and  (-webkit-min-device-pixel-ratio: $ratio),
+            only screen and (max-width: $width) and  (min-device-pixel-ratio: $ratio) {
+            @content;
+        }
+    } @else {
+        @media only screen and (max-width: $width) {
+            @content;
+        }
+    }
+}
+// Media query helper for declaring media queries by device pixel ratio.
+// @access public
+// @param {Number} $ratio - Min device pixel ratio
+// @example scss - Usage
+//   .foo {
+//     @include mquery-r(2) {
+//       width: 100%;
+//     }
+//   }
+@mixin mquery-r($ratio) {
+    @media
+        only screen and (-webkit-min-device-pixel-ratio: $ratio),
+        only screen and (min--moz-device-pixel-ratio: $ratio),
+        only screen and (-o-min-device-pixel-ratio: $ratio),
+        only screen and (min-device-pixel-ratio: $ratio) {
+        @content;
+    }
+}
+
+
+@mixin medmxn($mnw, $mxw) {
+    @media screen and (min-width: $mnw) and (max-width: $mxw) {
+        @content;
+    }
+}
+
+@mixin medmx($mxw) {
+    @media screen and (max-width: $mxw) {
+        @content;
+    }
+}
+
+@mixin medmn($mnw) {
+    @media screen and (min-width: $mnw) {
+        @content;
+    }
+}

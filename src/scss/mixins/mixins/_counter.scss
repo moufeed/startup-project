@@ -1,0 +1,91 @@
+////
+///
+/// @since 1.0.0
+////
+
+
+/// ### Automatic Numbering
+/// ---
+/// The `counter` Mixin allows for automatic numbering of elements. Like an ordered list `ol`, but it works on any element. It is particularly useful in creating a table of contents or numbering headings for something like a thesis paper. The counters are applied via the content property
+/// #### Syntax :
+/// ```markup
+///   counter(Element[name|id], separator[character|Unicode] , counter-reset, parent[none|name], icon-font[none|name]);
+/// ```
+/// @param {Element} $element   - The element that you wanted to counted
+/// @param {string | Unicode} $separator   - the separator sign you want to use
+/// @param {name} $counter [item] - The name defines which counter that should be reset.
+/// @param {element} $parent  [false] - assing the name of the parent element if you wanted to work in a nested way like a  `ol` or `ul` inside another `ol`  or  `ul`
+/// @param {string} $font  [false] -  the icon font you want to use
+/// @example  markup - Html
+///  ---
+///  <ul class="foo">
+///      <li>level 1 - 1</li>
+///      <li>level 1 - 2
+///          <ul>
+///              <li>level 2 - 1</li>
+///              <li>level 2 - 2</li>
+///              <li>level 2 - 3
+///                  <ul>
+///                      <li>level 3 - 1</li>
+///                      <li>level 3 - 2</li>
+///                      <li>level 3 - 3</li>
+///                  </ul>
+///              </li>
+///          </ul>
+///      </li>
+///      <li>level 1 - 3</li>
+///  </ul>
+///   <section class="bar">
+///       <div>item 1</div>
+///        <div>item 2</div>
+///        <div>item 3</div>
+///   </section>
+/// ---
+/// @example  scss -  SCSS
+/// .foo{
+///      @include counter(li,"\f101", item, ul,FontAwesome);
+///     }
+/// .bar{
+///     @include counter(div, "\f101", section, $font:FontAwesome);
+///     }
+///
+/// ---
+/// @example  css -  CSS
+/// .foo ul, .foo {
+///   list-style: none;
+///   counter-reset: item;
+/// }
+/// .foo ul > li:before, .foo > li:before {
+///   font-family: "FontAwesome";
+///   counter-increment: item;
+///   content: counters(item," \f101 ") " \f101 ";
+/// }
+/// .bar {
+///   list-style: none;
+///   counter-reset: section;
+/// }
+/// .bar > div:before {
+///   font-family: "FontAwesome";
+///   counter-increment: section;
+///   content: counter(section) " \f101 ";
+/// }
+@mixin counter($element, $separator, $counter: item, $parent: false, $font: false) {
+    $selector: ();
+    @if $parent {
+        $selector: append($selector, #{$parent});
+    }
+    $selector: append($selector, unquote('&'), comma);
+    #{$selector} {
+        list-style: none;
+        counter-reset: #{$counter};
+        > #{$element} {
+            &:before {
+                @if $font {
+                    font-family: '#{$font}';
+                }
+                counter-increment: #{$counter};
+                content: if($parent, counters(#{$counter}, " #{$separator} ") " #{$separator} ", counter(#{$counter}) " #{$separator} ");
+            }
+        }
+    }
+}

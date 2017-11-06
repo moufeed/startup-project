@@ -1,0 +1,230 @@
+
+
+
+%clearfix{
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+//////////////////////////////////////
+ %twitter {
+    color: $stext;
+    background: $twitter;
+    &:hover {
+        color: $twitter;
+        background: $stext;
+    }
+    &:active{
+         color:     lighten($twitter,15);
+        background: darken($twitter,15);
+    }
+}
+
+%facebook {
+    color: $stext;
+    background: $facebook;
+    &:hover {
+        color: $facebook;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($facebook,15);
+        background: darken($facebook,15);
+    }
+}
+
+%rss {
+    color: $stext;
+    background-color: $rss;
+    &:hover {
+        color: $rss;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($rss,15);
+        background: darken($rss,15);
+    }
+}
+
+%google {
+    color: $stext;
+    background-color: $google;
+    &:hover {
+        color: $google;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($google,15);
+        background: darken($google,15);
+    }
+}
+
+%linkedin {
+    color: $stext;
+    background-color: $linkedin;
+    &:hover{
+        color: $linkedin;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($linkedin,15);
+        background: darken($linkedin,15);
+    }
+}
+
+%youtube {
+    color: $stext;
+    background-color: $youtube;
+    &:hover {
+        color: $youtube;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($youtube,15);
+        background: darken($youtube,15);
+    }
+}
+
+%skype {
+    color: $stext;
+    background-color: $skype;
+    &:hover {
+        color: $skype;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($twitter,15);
+        background: darken($twitter,15);
+    }
+}
+
+%vimeo {
+    color: $stext;
+    background-color: $vimeo;
+    &:hover {
+        color: $vimeo;
+        background: $stext;
+    }
+     &:active{
+         color: lighten($vimeo,15);
+        background: darken($vimeo,15);
+    }
+}
+
+%flickr {
+    color: $stext;
+    background-color: $flickr;
+    &:hover {
+        color: $flickr;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($flickr,15);
+        background: darken($flickr,15);
+    }
+}
+
+%instagram {
+    color: $stext;
+    background-color: $instagram;
+    &:hover {
+        color: $instagram;
+        background: $stext;
+    }
+    &:active{
+         color: lighten($instagram,15);
+        background: darken($instagram,15);
+    }
+}
+
+%socail-links{
+    a{
+        .fa{
+            &-twitter { @extend %twitter;}
+            &-facebook { @extend %facebook;}
+            &-rss { @extend %rss;}
+            &-google { @extend %google;}
+            &-linkedin { @extend %linkedin;}
+            &-youtube { @extend %youtube;}
+            &-skype { @extend %skype;}
+            &-vimeo { @extend %vimeo;}
+            &-flickr{ @extend %flickr;}
+            &-instagram{ @extend %instagram;}
+        }
+    }
+    //EX  @extend %socail-links;
+}
+
+
+$transparent :"transparent";
+%nav_menu{
+    border-color: transparent;
+    background-color:transparent;
+    border-radius:0;
+    margin-bottom:10px;
+    .navbar-header{
+        button{
+            span{}
+        }
+    }
+     .navbar-nav{
+         li{
+             a{
+                 padding-top: 10px;
+                 padding-bottom: 10px;
+             }
+             &.active,&.open{
+                 a{
+                     background-color:transparent;
+
+                     &:hover,&:focus,&:active,&:visited{
+                          background-color:transparent;
+                         color: auto ;
+                     }
+                 }
+             }
+             &.open{
+                 ul{
+                     box-shadow: none;
+                li{
+                    a{
+                        min-width: auto;
+                        color: auto ;
+                        padding-top:5px;
+                        padding-bottom: 5px;
+                    }
+                }
+                     }
+            }
+         }
+     }
+    //EX  @extend %nav_menu;
+}
+
+
+%pagination_list{
+    li{
+
+        &:first-child{
+            a{
+                border-radius: 0;
+            }
+        }
+        &:last-child{
+            a{
+                border-radius: 0;
+            }
+        }
+         &.active{
+         }
+           a{
+               position: relative;
+           }
+    }
+}
+

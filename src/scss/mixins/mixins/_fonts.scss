@@ -1,0 +1,147 @@
+////
+/// @group typography
+/// @since 1.0.0
+////
+
+
+/// ### fontface
+///   add custom webfont with multiple file formats.
+/// #### Syntax :
+/// ```markup
+///   fontface( font-family, <uri>[format]* , <file-format>?);
+/// ```
+/// @param {String} $fontfamily  -  Required. Defines the name of the font
+/// @param {URL} $fontpath     -  Required. Defines the URL(s) where the font should be downloaded from
+/// @param {String} $format    -  Optional. Font File Types
+/// @require {function} file_extension
+/// @require {variable} extensions
+/// @example scss - scss
+/// @include fontface(MyWebFont,'../fonts/MyWebFont',svg_Light eot_iefix otf woff ttf);
+/// @example css - css
+///   @font-face {
+///     font-family: MyWebFont;
+///     src: url("../fonts/MyWebFont.eot");
+///     src: url("../fonts/MyWebFont.svg#Light") format("svg"),
+///          url("../fonts/MyWebFont.eot?#iefix") format("embedded-opentype"),
+///          url("../fonts/MyWebFont.otf") format("otf"),
+///          url("../fonts/MyWebFont.woff") format("woff"), 
+///          url("../fonts/MyWebFont.ttf") format("truetype");
+///   }
+@mixin fontface($fontfamily, $fontpath, $format:false) {
+     $prefixs: (
+  		eot: "?#",
+  		svg: "#"
+  	);
+    @font-face {
+        font-family: $fontfamily;
+        @if $format {
+            $src: null;
+             @if str-index('#{$format}', eot){
+              src: url('#{$fontpath}.eot');
+            }
+            @each $ext in $format{
+             $slice : if(str-index($ext, '_') , str-slice($ext,0, str-index($ext, '_')-1), $ext );
+             $prefix : get-key($prefixs,$slice);
+             $ext : if(str-index($ext, _) , str-replace($ext,'_','#{$prefix}') ,$ext );
+             $src : append($src , url('#{$fontpath}.#{$ext}') format('#{get-key($extensions,$slice)}'), comma);
+            }
+            src : $src;
+        }
+        @else {
+            src: url('#{$fontpath}');
+        }
+    }
+}
+
+/// ### lineheight
+/// This mixin  specifies the line height.
+/// @param {length} $fontsize     - Required. the font size.
+/// @example scss - scss
+///  .foo{
+///   @include lineheight(18px);
+///   }
+/// @example css - css
+///   .foo {
+///     line-height: 25px;
+///   }
+ @mixin lineheight($fontsize){
+     line-height: floor(($fontsize * $base-line-height));
+}
+
+/// ### fontsize
+/// This mixin sets the font size in rem's with a px fallback.
+/// @param {length} $fontsize     - Required. Sets the font size.
+/// @param {boolean} $lineheight [false] - Optional.true to active the line height.
+/// @example scss - scss
+///  .foo{
+///   @include fontsize(18px);
+///   }
+///  .bar{
+///   @include fontsize(18px,true);
+///   }
+/// @example css - css
+///   .foo {
+///     font-size: 18px;
+///     font-size: 1.28571rem;
+///   }
+///   .bar {
+///     font-size: 18px;
+///     font-size: 1.28571rem;
+///     line-height: 25px;
+///   }
+@mixin fontsize($fontsize,$lineheight:false) {
+  $rem: $fontsize / $base-font-size;
+  font-size: $fontsize;
+  font-size: $rem * 1rem;
+    @if $lineheight{
+    @include lineheight($fontsize);
+  }
+}
+/// ### icon font
+/// This `ficon` mixin helps you sets the icon  from your web icon font .
+/// @param {code} $content     - Required. font icon Unicode.
+/// @param {name} $webfont [false] - Optional. default FontAwesome you can change it
+/// @example scss - scss
+///  .foo{
+///    @include ficon(f1e0);
+///   }
+///  .bar{
+///   @include  ficon(E84D,Entypo);
+///   }
+/// @example css - css
+///   .foo {
+///      font-family: 'FontAwesome';
+///      content: "\f1e0";
+///   }
+///   .bar {
+///      font-family: "Entypo";
+///      content: "\E84D";
+///   }
+@mixin ficon($content,$webfont:false){
+  @if  $webfont{
+      font-family:'#{$webfont}';
+  }@else{
+   font-family: $base-font-icon ;
+    }
+    content: unquote('"#{'\\' + $content}"');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
